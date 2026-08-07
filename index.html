@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>12 August 2026 — Eclipse &amp; Sky Guide</title>
+<meta name="description" content="Verified local circumstances for the 12 August 2026 total solar eclipse, computed from NASA Besselian elements. Plus every other event of the biggest skywatching day of the decade.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23f5c451'/><circle cx='64' cy='42' r='38' fill='%230b0e17'/></svg>">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{
+  --bg:#080a11; --bg2:#0d111c; --panel:#121828; --panel2:#171e31;
+  --line:#252e45; --line2:#33405e;
+  --txt:#e8ecf6; --dim:#98a3bd; --dim2:#6b7691;
+  --gold:#f5c451; --gold2:#ffdc8a; --red:#ff6b6b; --grn:#5fd6a0; --blu:#6fb3ff; --vio:#b08cff;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+h1,h2,h3{line-height:1.2;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(1200px 520px at 72% -10%,#1d2740 0%,transparent 62%),
+             radial-gradient(700px 400px at 12% 0%,#241a2e 0%,transparent 60%),var(--bg)}
+#stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.55}
+.hero-in{position:relative;padding:62px 0 52px}
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border:1px solid #4a3c1c;
+  border-radius:99px;background:#1d1708}
+h1{font-size:clamp(34px,6.2vw,62px);font-weight:800;letter-spacing:-.028em;margin:20px 0 0}
+h1 .g{background:linear-gradient(96deg,var(--gold2),var(--gold) 45%,#e0913a);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--dim);font-size:clamp(15px,2.1vw,19px);max-width:660px;margin:16px 0 0}
+.cd{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
+.cd div{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:12px 16px;min-width:80px;text-align:center}
+.cd b{display:block;font:700 26px/1 var(--mono);color:var(--gold)}
+.cd span{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim2)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+.jump a{font-size:13.5px;color:var(--dim);text-decoration:none;padding:8px 14px;
+  border:1px solid var(--line);border-radius:99px;background:#0f1420;transition:.15s}
+.jump a:hover{color:var(--txt);border-color:var(--line2);background:var(--panel2)}
+
+/* ---------- generic ---------- */
+section{padding:60px 0;border-bottom:1px solid var(--line)}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+h2{font-size:clamp(24px,3.6vw,34px);font-weight:750;letter-spacing:-.02em}
+.lede{color:var(--dim);max-width:720px;margin:14px 0 0;font-size:16.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- picker ---------- */
+.picker{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:24px 0 20px}
+select,input,button{font:inherit;color:var(--txt);background:var(--panel2);
+  border:1px solid var(--line2);border-radius:10px;padding:11px 14px}
+select{min-width:250px;cursor:pointer}
+button{cursor:pointer;background:#1c2740;transition:.15s}
+button:hover{background:#243252;border-color:#43537a}
+button.pri{background:linear-gradient(180deg,#f5c451,#e0a63a);color:#241a05;border-color:#f5c451;font-weight:650}
+button.pri:hover{filter:brightness(1.08)}
+
+/* result */
+.verdict{border-radius:16px;padding:24px;border:1px solid var(--line);background:var(--panel);margin-bottom:16px}
+.verdict.total{border-color:#2e6b4e;background:linear-gradient(180deg,#102a1e,#0f1c19)}
+.verdict.near{border-color:#7a5a20;background:linear-gradient(180deg,#2a2110,#1b1810)}
+.verdict.part{border-color:#2b3550;background:linear-gradient(180deg,#141a2a,#10141f)}
+.verdict.none{border-color:#6b2e2e;background:linear-gradient(180deg,#2a1212,#1c1010)}
+.vtag{font:700 11px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  padding:6px 11px;border-radius:99px;display:inline-block;margin-bottom:14px}
+.t-total{background:#1d5c3f;color:#9ff0c6}.t-near{background:#6b4c14;color:#ffd98a}
+.t-part{background:#26304a;color:#a9bde0}.t-none{background:#5c1f1f;color:#ffb3b3}
+.big{font:800 clamp(30px,5.5vw,46px)/1 var(--mono);letter-spacing:-.02em;margin:6px 0}
+.verdict p{margin:10px 0 0;color:var(--dim)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-top:20px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.stat span{display:block;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim2);margin-bottom:5px}
+.stat b{font:700 19px/1.2 var(--mono)}
+
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font:600 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--dim2)}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+tr.hl td{background:#1a2233}
+
+.warn{border-left:3px solid var(--red);background:#1e1214;padding:14px 16px;border-radius:0 10px 10px 0;margin-top:16px}
+.warn b{color:#ff9c9c}
+.note{border-left:3px solid var(--blu);background:#101a28;padding:14px 16px;border-radius:0 10px 10px 0;margin-top:16px;color:var(--dim)}
+.ok{border-left:3px solid var(--grn);background:#0f1e18;padding:14px 16px;border-radius:0 10px 10px 0;margin-top:16px;color:var(--dim)}
+
+#map{height:520px;border-radius:16px;border:1px solid var(--line);background:#0c1018;z-index:1}
+.leaflet-popup-content-wrapper{background:var(--panel2);color:var(--txt);border-radius:12px}
+.leaflet-popup-tip{background:var(--panel2)}
+.leaflet-popup-content{margin:13px 15px;font-size:14px}
+.leaflet-container a.leaflet-popup-close-button{color:var(--dim)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--dim)}
+.legend i{display:inline-block;width:22px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle}
+
+.spot{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--panel)}
+.spot h4{margin:0 0 4px;font-size:16.5px}
+.spot .meta{font-size:12.5px;color:var(--dim2);font-family:var(--mono);margin-bottom:10px}
+.spot p{margin:0 0 14px;font-size:14.5px;color:var(--dim)}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+.links a{font-size:12.5px;text-decoration:none;padding:7px 11px;border-radius:8px;
+  border:1px solid var(--line2);color:var(--dim);background:var(--bg2);transition:.15s}
+.links a:hover{color:var(--gold);border-color:#5a4a22;background:#1a1710}
+.tp{display:inline-block;font:600 11px/1 var(--mono);padding:5px 9px;border-radius:6px;
+  background:#16233a;color:var(--blu);margin-bottom:10px}
+
+/* compass */
+.compass{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.compass svg{flex:0 0 auto}
+
+/* timeline */
+.tl{position:relative;padding-left:26px;margin-top:26px}
+.tl:before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line2)}
+.ev{position:relative;padding:0 0 26px}
+.ev:before{content:"";position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;
+  background:var(--panel);border:2px solid var(--gold)}
+.ev.dim:before{border-color:var(--line2)}
+.ev time{font:600 13px/1 var(--mono);color:var(--gold)}
+.ev.dim time{color:var(--dim2)}
+.ev h4{margin:7px 0 4px;font-size:16.5px}
+.ev p{margin:0;color:var(--dim);font-size:14.5px}
+
+footer{padding:44px 0 70px;color:var(--dim2);font-size:13.5px}
+footer a{color:var(--dim)}
+.src{columns:2;column-gap:28px;margin-top:12px}
+@media(max-width:640px){.src{columns:1}}
+.src li{break-inside:avoid;margin-bottom:6px}
+
+/* ---------- directory ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:24px 0 8px}
+.chip{font-size:13px;padding:8px 14px;border-radius:99px;border:1px solid var(--line2);
+  background:var(--bg2);color:var(--dim);cursor:pointer;transition:.15s;user-select:none}
+.chip:hover{color:var(--txt);border-color:#43537a}
+.chip.on{background:#2a3b22;border-color:#4a7a30;color:#b9e88a}
+.chip.on.warnc{background:#3a2a12;border-color:#7a5a20;color:#ffd98a}
+#dsearch{min-width:190px;flex:1}
+.counts{color:var(--dim2);font-size:13.5px;margin:6px 0 0;font-family:var(--mono)}
+
+.citygrp{margin-top:34px}
+.cityhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+.cityhead h3{font-size:21px;font-weight:700}
+.cityhead .cc{font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--dim2);
+  border:1px solid var(--line2);border-radius:5px;padding:4px 7px}
+.cityhead .what{font-size:14px;color:var(--dim);font-family:var(--mono)}
+.cityhead .tot{color:var(--grn);font-weight:600}
+
+.sgrid{display:grid;gap:14px}
+@media(min-width:820px){.sgrid{grid-template-columns:1fr 1fr}}
+
+.scard{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:17px;
+  display:flex;flex-direction:column}
+.scard.clear{border-color:#2e6b4e}
+.scard.tight{border-color:#7a5a20}
+.scard.blocked{border-color:#6b2e2e;opacity:.82}
+.vb{font:700 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  padding:5px 9px;border-radius:5px;display:inline-block;margin-bottom:11px}
+.vb.clear{background:#1d5c3f;color:#9ff0c6}
+.vb.work{background:#4a5c1d;color:#dcf09f}
+.vb.tight{background:#6b4c14;color:#ffd98a}
+.vb.blocked{background:#5c1f1f;color:#ffb3b3}
+.scard h4{font-size:16.5px;margin:0 0 3px}
+.scard .kind{font:12px var(--mono);color:var(--dim2);margin-bottom:12px}
+.ev{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:13px;margin-bottom:13px}
+.ev dt{color:var(--dim2)}
+.ev dd{margin:0;font-family:var(--mono);color:var(--dim)}
+.ev dd b{color:var(--txt);font-weight:600}
+.bar{height:6px;border-radius:3px;background:#1a2233;overflow:hidden;margin:2px 0 12px;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.scard .links{margin-top:auto}
+.est{font-size:11.5px;color:var(--dim2);font-style:italic;margin-top:9px}
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+<canvas id="stars"></canvas>
+<div class="wrap hero-in">
+  <div class="kicker">Wednesday 12 August 2026</div>
+  <h1>The sky's <span class="g">best day</span><br>of the decade.</h1>
+  <p class="sub">A total solar eclipse at sunset over Iceland and Spain, a deep partial across the
+  rest of Europe — and that same moonless night, the Perseids peak. This page computes what
+  <em>you</em> will actually see, from your exact spot, and where to stand to see it.</p>
+  <div class="cd" id="countdown">
+    <div><b id="cd-d">–</b><span>days</span></div>
+    <div><b id="cd-h">–</b><span>hours</span></div>
+    <div><b id="cd-m">–</b><span>min</span></div>
+    <div><b id="cd-s">–</b><span>sec</span></div>
+  </div>
+  <nav class="jump">
+    <a href="#you">What you'll see</a>
+    <a href="#map-sec">Map &amp; path</a>
+    <a href="#where">Where to go</a>
+    <a href="#spots">Milan in detail</a>
+    <a href="#escape">Reach totality by train</a>
+    <a href="#night">The whole day</a>
+    <a href="#safety">Safety</a>
+    <a href="#trust">How accurate is this?</a>
+  </nav>
+</div>
+</header>
+
+<!-- ============ YOUR CIRCUMSTANCES ============ -->
+<section id="you">
+<div class="wrap">
+  <div class="eyebrow">Step one</div>
+  <h2>What happens where you are</h2>
+  <p class="lede">Times, sun position and coverage are computed live from NASA/GSFC Besselian
+  elements for this eclipse — not looked up from a table. Pick a city, use your location, or
+  click anywhere on the map below.</p>
+
+  <div class="picker">
+    <select id="city"></select>
+    <button id="geo">Use my location</button>
+    <button class="pri" id="perseid-jump" onclick="document.getElementById('night').scrollIntoView()">Skip to tonight's sky</button>
+  </div>
+
+  <div id="result"></div>
+</div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section id="map-sec">
+<div class="wrap">
+  <div class="eyebrow">Step two</div>
+  <h2>The path, and where you are relative to it</h2>
+  <p class="lede">The shaded band is where the eclipse is <em>total</em>. Everywhere else on this
+  map sees a partial eclipse only — and the difference between the two is not a matter of degree.
+  <strong>Click anywhere</strong> to compute that spot.</p>
+
+  <div id="map" style="margin-top:24px"></div>
+  <div class="legend">
+    <span><i style="background:#f5c451"></i>Path of totality</span>
+    <span><i style="background:#e0913a;height:2px"></i>Centre line (longest totality)</span>
+    <span><i style="background:#5fd6a0"></i>In totality</span>
+    <span><i style="background:#ff6b6b"></i>Near miss — so close it hurts</span>
+    <span><i style="background:#6fb3ff"></i>Partial only</span>
+  </div>
+  <div class="note" id="map-fallback" style="display:none">
+    The interactive map needs to load Leaflet from a CDN and it didn't load. Everything else on
+    this page still works — use the city dropdown above.
+  </div>
+</div>
+</section>
+
+
+<!-- ============ DIRECTORY ============ -->
+<section id="where">
+<div class="wrap">
+  <div class="eyebrow">Places to go</div>
+  <h2>Vetted viewing spots across Europe</h2>
+  <p class="lede">Open, publicly accessible ground within reach of a station or stop, in every
+  city where the eclipse is visible — with the horizon actually measured on the sun's exact
+  bearing. You don't have to tell anyone where you live; just pick somewhere and go.</p>
+
+  <div class="note">
+    <strong>How each spot was checked.</strong> For every candidate I computed the sun's bearing
+    at maximum eclipse, then measured what is in the way along that bearing: <strong>terrain</strong>
+    from the SRTM 30 m elevation model out to 45 km, and <strong>buildings</strong> from
+    OpenStreetMap within a corridor 2.5 km deep, using tagged heights where they exist. The
+    verdict compares the sun's altitude against the higher of the two. Clearance is quoted in
+    <strong>sun-diameters</strong> (the sun is 0.53° wide) because a tenth of a degree means
+    something very different in Reykjavík than in Milan.
+  </div>
+
+  <div class="filters">
+    <input id="dsearch" placeholder="Search city, country or place…">
+    <span class="chip on" id="f-clear">Clear horizons only</span>
+    <span class="chip" id="f-tot">Totality only</span>
+    <span class="chip" id="f-rail">Rail / metro / tram only</span>
+  </div>
+  <p class="counts" id="dcounts"></p>
+  <div id="directory"></div>
+  <div class="note" id="dnone" style="display:none">
+    Nothing matches those filters. Try switching one off.
+  </div>
+</div>
+</section>
+
+<!-- ============ SPOTS ============ -->
+<section id="spots">
+<div class="wrap">
+  <div class="eyebrow">Step three</div>
+  <h2>Where to actually stand</h2>
+  <p class="lede">At sunset the sun is only a few degrees up, so <strong>your horizon matters more
+  than anything else</strong> — more than your optics, more than your city. One building, one row
+  of poplars, one low hill in the wrong place and you see nothing at all.</p>
+
+  <div class="note">
+    <strong>Every Street View link below is pre-aimed at the exact compass bearing of the eclipsed
+    sun for that spot.</strong> Open it and you are looking at the horizon you will have on the
+    day. That is the check — not my say-so. I picked these for open western sightlines and
+    public-transport access, but I have not stood in any of them.
+  </div>
+
+  <div class="picker" style="margin-top:26px">
+    <select id="spot-city"></select>
+  </div>
+  <div class="grid g2" id="spot-list"></div>
+</div>
+</section>
+
+<!-- ============ ESCAPE ============ -->
+<section id="escape">
+<div class="wrap">
+  <div class="eyebrow">If you are close</div>
+  <h2>Cities that can reach totality on a commuter train</h2>
+  <p class="lede">Madrid misses totality by about 15 km. Barcelona misses it by about 30 km. Both
+  are inside a regional-rail ride of the umbra. A 99.9% partial and a 100% total are completely
+  different experiences — this is the single highest-value move available to anyone in those two
+  cities.</p>
+  <div class="scroll" style="margin-top:24px">
+    <table id="escape-tbl">
+      <thead><tr><th>From</th><th>What you get if you stay</th><th>Go to</th><th>How</th><th class="num">Totality</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="warn">
+    <b>The trap:</b> Palermo and Tunis are geometrically inside the path of totality — and it buys
+    them nothing, because the sun sets <em>before</em> totality starts. "In the path" is not the
+    same as "can see it." This page checks both.
+  </div>
+</div>
+</section>
+
+<!-- ============ CHOOSING ============ -->
+<section id="choose">
+<div class="wrap">
+  <div class="eyebrow">If you are travelling</div>
+  <h2>Where along the path is best</h2>
+  <p class="lede">There is no single right answer — the path trades sun altitude against cloud
+  odds. Cloud climatology below is from Jay Anderson's Eclipsophile, the standard reference for
+  eclipse weather.</p>
+  <div class="scroll" style="margin-top:24px">
+    <table>
+      <thead><tr><th>Region</th><th class="num">Totality</th><th class="num">Sun alt.</th><th class="num">Aug cloud</th><th>The trade-off</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ebro valley</strong><br><span style="color:var(--dim2);font-size:13px">Zaragoza, Huesca</span></td>
+            <td class="num">~1m24s</td><td class="num">6°</td><td class="num" style="color:var(--grn)">&lt;30%</td>
+            <td>Best clear-sky odds on the whole track — clear in 18 of 21 years studied. Sun is low; you need a flat western horizon. <strong>The percentage play.</strong></td></tr>
+        <tr><td><strong>Meseta</strong><br><span style="color:var(--dim2);font-size:13px">Burgos, León, Valladolid</span></td>
+            <td class="num">~1m45s</td><td class="num">8–10°</td><td class="num" style="color:var(--gold)">35–40%</td>
+            <td>The balanced choice — long totality, workable sun altitude, decent weather. Wide open plateau makes horizons easy.</td></tr>
+        <tr><td><strong>Asturian coast</strong><br><span style="color:var(--dim2);font-size:13px">Oviedo, Gijón</span></td>
+            <td class="num">~1m48s</td><td class="num">10–12°</td><td class="num" style="color:var(--red)">~60%</td>
+            <td>Longest totality and the highest sun — and a genuine sea horizon to the WNW. But the worst cloud odds in Spain: visible in only 10 of 21 years.</td></tr>
+        <tr><td><strong>Balearics</strong><br><span style="color:var(--dim2);font-size:13px">Mallorca, Ibiza</span></td>
+            <td class="num">~1m36s</td><td class="num">2–3°</td><td class="num" style="color:var(--grn)">~25%</td>
+            <td>A totally eclipsed sun sitting on the sea — the most photogenic option that exists. Also the most fragile: 2° means any haze bank kills it.</td></tr>
+        <tr><td><strong>Iceland</strong><br><span style="color:var(--dim2);font-size:13px">Snæfellsnes, Westfjords</span></td>
+            <td class="num">up to 2m18s</td><td class="num">~25°</td><td class="num" style="color:var(--red)">70–80%</td>
+            <td>By far the best sun altitude — a normal, high eclipse with no horizon problem at all. Reykjavík itself gets only ~59s. Weather is the gamble.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ============ THE DAY ============ -->
+<section id="night">
+<div class="wrap">
+  <div class="eyebrow">Everything on 12 August</div>
+  <h2>The eclipse is only half of it</h2>
+  <p class="lede">A solar eclipse means a new moon, and a new moon means the darkest possible sky
+  that night — which happens to be the night the Perseids peak. That combination is what makes
+  this date unusual, and it is the part most people will miss.</p>
+  <div class="tl" id="timeline"></div>
+  <div class="note">
+    <strong>On the Perseid rate:</strong> sources genuinely disagree. The IMO's working figure for
+    2026 is a ZHR of 30–50; several outlets quote 100–150. ZHR is also a idealised number — it
+    assumes the radiant overhead and a perfect sky. Under a real dark rural sky expect
+    <strong>roughly 40–70 meteors an hour</strong> after midnight, and far fewer from inside a city.
+    The moonless sky is the real story here, not the rate.
+  </div>
+</div>
+</section>
+
+<!-- ============ SAFETY ============ -->
+<section id="safety">
+<div class="wrap">
+  <div class="eyebrow">Read this first</div>
+  <h2>The partial phases will blind you</h2>
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card" style="border-color:#6b2e2e;background:linear-gradient(180deg,#241213,#151016)">
+      <h3 style="color:#ff9c9c;font-size:19px">Never point an unfiltered telescope, camera or binocular at the sun</h3>
+      <p style="color:var(--dim);margin-top:12px">A 90%-covered sun is still about a thousand times
+      too bright to look at safely. The remaining sliver is the same surface brightness as the full
+      disc. Telescope optics concentrate that — an unfiltered scope can cause permanent retinal
+      damage faster than your blink reflex, and it is painless while it happens.</p>
+      <p style="color:var(--dim);margin-top:12px"><strong style="color:#ff9c9c">The filter goes on
+      the front of the telescope, never on the eyepiece.</strong> Screw-in eyepiece "sun filters"
+      that shipped with older beginner scopes crack under concentrated heat. Throw them away.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:19px">What you actually need</h3>
+      <ul style="color:var(--dim);margin:12px 0 0;padding-left:20px">
+        <li><strong>Eyes:</strong> ISO 12312-2 eclipse glasses. Check for pinholes against a bright
+        lamp before the day.</li>
+        <li><strong>Telescope / lens / binoculars:</strong> a full-aperture solar filter that covers
+        the entire front opening — Baader AstroSolar film or a certified glass filter. Tape it so
+        wind cannot lift it.</li>
+        <li><strong>No filter to hand:</strong> pinhole projection, or project the image from a
+        telescope's eyepiece onto white card. Never look through it.</li>
+        <li><strong>Cameras:</strong> the filter protects the sensor and shutter too, not just you.
+        Live-view does not make an unfiltered lens safe.</li>
+      </ul>
+      <div class="ok" style="margin-top:16px">
+        <strong style="color:var(--grn)">The only exception:</strong> during <em>totality itself</em>
+        — and only inside the path, only between second and third contact — filters come off and you
+        look with the naked eye. That is the whole point of totality. Everywhere outside the path,
+        including at 99.9%, the filter never comes off at any moment.
+      </div>
+    </div>
+  </div>
+  <div class="warn">
+    <b>Sunset is not a filter.</b> The sun will look tame and orange at 2° altitude. It is not.
+    Haze varies minute to minute and can drop several stops without warning — people have been
+    hurt precisely because a low sun felt safe to stare at. Keep the filter on until the disc is
+    fully gone below the horizon.
+  </div>
+</div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section id="trust">
+<div class="wrap">
+  <div class="eyebrow">Honesty</div>
+  <h2>How accurate is this, and where does it stop?</h2>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card">
+      <h3 style="font-size:18px;color:var(--grn)">What is genuinely computed</h3>
+      <p style="color:var(--dim);margin-top:10px">Contact times, magnitude, obscuration and totality
+      duration come from the polynomial Besselian elements NASA publishes for this specific eclipse,
+      evaluated for your coordinates with the standard method — the same maths professional eclipse
+      software uses. Sun altitude, azimuth and sunset are computed independently.</p>
+      <p style="color:var(--dim);margin-top:10px">I validated the output against published local
+      circumstances before shipping it:</p>
+      <div class="scroll">
+      <table style="margin-top:8px;font-size:13.5px">
+        <thead><tr><th>Check</th><th class="num">This page</th><th class="num">Published</th></tr></thead>
+        <tbody>
+          <tr><td>Milan magnitude</td><td class="num">0.933</td><td class="num">0.933</td></tr>
+          <tr><td>Milan obscuration</td><td class="num">92.3%</td><td class="num">92.3%</td></tr>
+          <tr><td>Milan first contact</td><td class="num">19:27:43</td><td class="num">19:27:37</td></tr>
+          <tr><td>Barcelona obscuration</td><td class="num">99.8%</td><td class="num">99.8%</td></tr>
+          <tr><td>Paris obscuration</td><td class="num">92.1%</td><td class="num">92.1%</td></tr>
+          <tr><td>Zaragoza totality</td><td class="num">84.0 s</td><td class="num">84 s</td></tr>
+          <tr><td>Oviedo totality</td><td class="num">108.3 s</td><td class="num">108 s</td></tr>
+          <tr><td>Reykjavík totality</td><td class="num">59 s</td><td class="num">57–59 s</td></tr>
+          <tr><td>Látrabjarg (max on path)</td><td class="num">2m18.2s</td><td class="num">2m18.2s</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="color:var(--dim);margin-top:12px;font-size:14px">Contact times land within about
+      10 seconds of published values, totality durations within a couple of seconds. Good enough to
+      set up on. Not good enough to time a contact experiment to the second.</p>
+    </div>
+
+    <div class="card" style="border-color:#7a5a20">
+      <h3 style="font-size:18px;color:var(--gold)">What this page does <em>not</em> know</h3>
+      <ul style="color:var(--dim);margin:10px 0 0;padding-left:20px">
+        <li><strong>Your actual horizon.</strong> This is the big one. There is no terrain or
+        building model behind these numbers. When the page says "you need a clear horizon down to
+        2°", it cannot tell you whether you have one. Only the Street View links, a map contour, or
+        your own eyes can. <em>At these sun altitudes this is the difference between seeing the
+        eclipse and not seeing it.</em></li>
+        <li><strong>The weather.</strong> The cloud figures are climatology — long-run averages, not
+        a forecast. Check an actual forecast 48 hours out and be ready to drive.</li>
+        <li><strong>Refraction near the horizon.</strong> Below about 5° the sun's true position
+        differs from where it appears by more than its own diameter, and the disc flattens visibly.
+        Standard refraction is applied, but real refraction on the day depends on the air column.</li>
+        <li><strong>Altitude.</strong> Everything assumes sea level. Being 300 m up extends the
+        eclipse slightly and lowers your true horizon — helpful, not modelled.</li>
+      </ul>
+      <div class="note" style="margin-top:14px">
+        Before you commit to a spot, cross-check the timings against
+        <a href="http://xjubier.free.fr/en/site_pages/solar_eclipses/TSE_2026_GoogleMapFull.html">Xavier Jubier's interactive map</a>,
+        which is the reference tool the eclipse-chasing community actually uses, and check your
+        skyline with <a href="https://sfjc.github.io/eclipse-horizon-checker/">this horizon checker</a>.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="font-size:18px">So will this get you a good eclipse?</h3>
+    <p style="color:var(--dim);margin-top:10px">It gets you the right place, the right minute and
+    the right bearing, and it tells you what gear will not hurt you. It cannot get you a clear sky,
+    and it cannot see the building at the end of your street. If you are outside the path of
+    totality, no tool changes that — only travelling does. Use this to plan, then verify your
+    horizon on the ground a day early, in the same evening light, at the same time.</p>
+  </div>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+  <p><strong style="color:var(--txt)">Sources &amp; further reading</strong></p>
+  <ul class="src">
+    <li><a href="https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2026Aug12Tbeselm.html">NASA/GSFC — Besselian elements, 2026 Aug 12</a> (the basis of every number here)</li>
+    <li><a href="https://eclipsophile.com/tse2026/">Eclipsophile — cloud climatology for this eclipse</a></li>
+    <li><a href="http://xjubier.free.fr/en/site_pages/solar_eclipses/TSE_2026_GoogleMapFull.html">Xavier Jubier — interactive eclipse map</a></li>
+    <li><a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate — eclipse overview</a></li>
+    <li><a href="https://nationaleclipse.com/overviews/2026-total-solar-eclipse-overview.html">NationalEclipse — Iceland &amp; Spain overview</a></li>
+    <li><a href="https://astronomia.ign.es/en/eclipses-de-sol-y-luna/eclipse-total-sol-de-12-de-agosto-2026">Instituto Geográfico Nacional (Spain)</a></li>
+    <li><a href="https://www.imo.net/">International Meteor Organization — Perseid forecast</a></li>
+    <li><a href="https://www.rmg.co.uk/stories/space-astronomy/how-see-12-august-2026-partial-solar-eclipse">Royal Observatory Greenwich — viewing &amp; safety</a></li>
+  </ul>
+  <p style="margin-top:20px">Built for 12 August 2026. Eclipse geometry computed in-browser from
+  published Besselian elements; no data leaves your device, including your location.
+  Cross-check anything you are travelling for.</p>
+</div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ================= embedded data ================= */
+var CITIES = [{"n": "Reykjavík", "cc": "IS", "lat": 64.1466, "lon": -21.9426, "tz": 0, "visObs": 100, "visT": "2026-08-12T17:48:24Z", "visAlt": 24.6, "visAz": 252.6, "totVisible": true, "c1": "2026-08-12T16:47:14Z", "c2": "2026-08-12T17:48:18Z", "max": "2026-08-12T17:48:48Z", "c3": "2026-08-12T17:49:17Z", "c4": "2026-08-12T18:47:39Z", "tot": 59, "mag": 1.0019, "obs": 100, "altMax": 24.5, "azMax": 252.7, "altC1": 30.6, "azC1": 237.4, "sunset": "2026-08-12T21:52:40Z", "setsDuring": false}, {"n": "Ísafjörður", "cc": "IS", "lat": 66.0748, "lon": -23.1355, "tz": 0, "visObs": 100, "visT": "2026-08-12T17:44:09Z", "visAlt": 24.9, "visAz": 249.6, "totVisible": true, "c1": "2026-08-12T16:43:19Z", "c2": "2026-08-12T17:44:09Z", "max": "2026-08-12T17:44:54Z", "c3": "2026-08-12T17:45:39Z", "c4": "2026-08-12T18:43:59Z", "tot": 91, "mag": 1.0049, "obs": 100, "altMax": 24.8, "azMax": 249.8, "altC1": 30.3, "azC1": 234.2, "sunset": "2026-08-12T22:12:23Z", "setsDuring": false}, {"n": "Ólafsvík", "cc": "IS", "lat": 64.8945, "lon": -23.7108, "tz": 0, "visObs": 100, "visT": "2026-08-12T17:45:57Z", "visAlt": 25.3, "visAz": 250, "totVisible": true, "c1": "2026-08-12T16:45:07Z", "c2": "2026-08-12T17:45:56Z", "max": "2026-08-12T17:46:57Z", "c3": "2026-08-12T17:47:59Z", "c4": "2026-08-12T18:46:09Z", "tot": 123, "mag": 1.0108, "obs": 100, "altMax": 25.2, "azMax": 250.3, "altC1": 31, "azC1": 234.6, "sunset": "2026-08-12T22:05:11Z", "setsDuring": false}, {"n": "Akureyri", "cc": "IS", "lat": 65.6835, "lon": -18.0878, "tz": 0, "visObs": 97.9, "visT": "2026-08-12T17:46:44Z", "visAlt": 22.8, "visAz": 255.3, "totVisible": false, "c1": "2026-08-12T16:46:04Z", "c2": null, "max": "2026-08-12T17:46:43Z", "c3": null, "c4": "2026-08-12T18:44:53Z", "tot": 0, "mag": 0.9773, "obs": 97.9, "altMax": 22.8, "azMax": 255.3, "altC1": 28.5, "azC1": 240.3, "sunset": "2026-08-12T21:48:58Z", "setsDuring": false}, {"n": "A Coruña", "cc": "ES", "lat": 43.3623, "lon": -8.4115, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:27:48Z", "visAlt": 12.1, "visAz": 279.1, "totVisible": true, "c1": "2026-08-12T17:30:58Z", "c2": "2026-08-12T18:27:43Z", "max": "2026-08-12T18:28:20Z", "c3": "2026-08-12T18:28:58Z", "c4": "2026-08-12T19:22:01Z", "tot": 75, "mag": 1.0044, "obs": 100, "altMax": 12, "azMax": 279.2, "altC1": 22.4, "azC1": 269.5, "sunset": "2026-08-12T19:40:37Z", "setsDuring": false}, {"n": "Gijón", "cc": "ES", "lat": 43.5322, "lon": -5.6611, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:26:54Z", "visAlt": 10.3, "visAz": 280.7, "totVisible": true, "c1": "2026-08-12T17:31:04Z", "c2": "2026-08-12T18:26:49Z", "max": "2026-08-12T18:27:41Z", "c3": "2026-08-12T18:28:34Z", "c4": "2026-08-12T19:20:46Z", "tot": 105, "mag": 1.0124, "obs": 100, "altMax": 10.2, "azMax": 280.8, "altC1": 20.4, "azC1": 271.4, "sunset": "2026-08-12T19:30:00Z", "setsDuring": false}, {"n": "Oviedo", "cc": "ES", "lat": 43.3619, "lon": -5.8494, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:27:11Z", "visAlt": 10.4, "visAz": 280.7, "totVisible": true, "c1": "2026-08-12T17:31:21Z", "c2": "2026-08-12T18:27:06Z", "max": "2026-08-12T18:28:00Z", "c3": "2026-08-12T18:28:54Z", "c4": "2026-08-12T19:21:06Z", "tot": 108, "mag": 1.015, "obs": 100, "altMax": 10.3, "azMax": 280.8, "altC1": 20.4, "azC1": 271.4, "sunset": "2026-08-12T19:30:23Z", "setsDuring": false}, {"n": "Santander", "cc": "ES", "lat": 43.4623, "lon": -3.81, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:27:03Z", "visAlt": 9, "visAz": 282, "totVisible": true, "c1": "2026-08-12T17:31:23Z", "c2": "2026-08-12T18:26:58Z", "max": "2026-08-12T18:27:29Z", "c3": "2026-08-12T18:28:00Z", "c4": "2026-08-12T19:20:08Z", "tot": 63, "mag": 1.0032, "obs": 100, "altMax": 8.9, "azMax": 282.1, "altC1": 19, "azC1": 272.7, "sunset": "2026-08-12T19:22:27Z", "setsDuring": false}, {"n": "Bilbao", "cc": "ES", "lat": 43.263, "lon": -2.935, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:27:29Z", "visAlt": 8.3, "visAz": 282.7, "totVisible": true, "c1": "2026-08-12T17:31:49Z", "c2": "2026-08-12T18:27:24Z", "max": "2026-08-12T18:27:39Z", "c3": "2026-08-12T18:27:53Z", "c4": "2026-08-12T19:20:04Z", "tot": 29, "mag": 1.0006, "obs": 100, "altMax": 8.2, "azMax": 282.7, "altC1": 18.2, "azC1": 273.4, "sunset": "2026-08-12T19:18:31Z", "setsDuring": true}, {"n": "Burgos", "cc": "ES", "lat": 42.3439, "lon": -3.6969, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:28:33Z", "visAlt": 8.4, "visAz": 282.5, "totVisible": true, "c1": "2026-08-12T17:33:23Z", "c2": "2026-08-12T18:28:25Z", "max": "2026-08-12T18:29:17Z", "c3": "2026-08-12T18:30:09Z", "c4": "2026-08-12T19:21:44Z", "tot": 104, "mag": 1.0136, "obs": 100, "altMax": 8.3, "azMax": 282.6, "altC1": 18.5, "azC1": 273.5, "sunset": "2026-08-12T19:19:38Z", "setsDuring": true}, {"n": "León", "cc": "ES", "lat": 42.5987, "lon": -5.5671, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:28:25Z", "visAlt": 9.8, "visAz": 281.2, "totVisible": true, "c1": "2026-08-12T17:32:45Z", "c2": "2026-08-12T18:28:21Z", "max": "2026-08-12T18:29:13Z", "c3": "2026-08-12T18:30:05Z", "c4": "2026-08-12T19:22:07Z", "tot": 105, "mag": 1.0126, "obs": 100, "altMax": 9.7, "azMax": 281.3, "altC1": 20, "azC1": 272.1, "sunset": "2026-08-12T19:27:38Z", "setsDuring": false}, {"n": "Valladolid", "cc": "ES", "lat": 41.6523, "lon": -4.7245, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:30:02Z", "visAlt": 8.7, "visAz": 282.1, "totVisible": true, "c1": "2026-08-12T17:34:32Z", "c2": "2026-08-12T18:29:53Z", "max": "2026-08-12T18:30:37Z", "c3": "2026-08-12T18:31:21Z", "c4": "2026-08-12T19:23:10Z", "tot": 87, "mag": 1.0071, "obs": 100, "altMax": 8.6, "azMax": 282.2, "altC1": 19, "azC1": 273.2, "sunset": "2026-08-12T19:22:20Z", "setsDuring": true}, {"n": "Palencia", "cc": "ES", "lat": 42.0096, "lon": -4.5288, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:29:14Z", "visAlt": 8.8, "visAz": 282.1, "totVisible": true, "c1": "2026-08-12T17:33:54Z", "c2": "2026-08-12T18:29:09Z", "max": "2026-08-12T18:30:00Z", "c3": "2026-08-12T18:30:51Z", "c4": "2026-08-12T19:22:34Z", "tot": 102, "mag": 1.0119, "obs": 100, "altMax": 8.7, "azMax": 282.2, "altC1": 19, "azC1": 273.1, "sunset": "2026-08-12T19:22:17Z", "setsDuring": true}, {"n": "Logroño", "cc": "ES", "lat": 42.4627, "lon": -2.445, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:28:15Z", "visAlt": 7.6, "visAz": 283.2, "totVisible": true, "c1": "2026-08-12T17:33:15Z", "c2": "2026-08-12T18:28:09Z", "max": "2026-08-12T18:28:50Z", "c3": "2026-08-12T18:29:30Z", "c4": "2026-08-12T19:21:01Z", "tot": 81, "mag": 1.0061, "obs": 100, "altMax": 7.5, "azMax": 283.3, "altC1": 17.6, "azC1": 274.3, "sunset": "2026-08-12T19:14:53Z", "setsDuring": true}, {"n": "Zaragoza", "cc": "ES", "lat": 41.6488, "lon": -0.8891, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:29:12Z", "visAlt": 6.1, "visAz": 284.5, "totVisible": true, "c1": "2026-08-12T17:34:42Z", "c2": "2026-08-12T18:29:03Z", "max": "2026-08-12T18:29:45Z", "c3": "2026-08-12T18:30:27Z", "c4": "2026-08-12T19:21:29Z", "tot": 84, "mag": 1.007, "obs": 100, "altMax": 6.1, "azMax": 284.6, "altC1": 16.1, "azC1": 275.8, "sunset": "2026-08-12T19:07:00Z", "setsDuring": true}, {"n": "Huesca", "cc": "ES", "lat": 42.1401, "lon": -0.4087, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:28:52Z", "visAlt": 6, "visAz": 284.7, "totVisible": false, "c1": "2026-08-12T17:33:52Z", "c2": null, "max": "2026-08-12T18:28:51Z", "c3": null, "c4": "2026-08-12T19:20:34Z", "tot": 0, "mag": 0.9998, "obs": 100, "altMax": 6, "azMax": 284.7, "altC1": 15.9, "azC1": 275.8, "sunset": "2026-08-12T19:06:05Z", "setsDuring": true}, {"n": "Lleida", "cc": "ES", "lat": 41.6176, "lon": 0.62, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:29:15Z", "visAlt": 5.1, "visAz": 285.5, "totVisible": true, "c1": "2026-08-12T17:34:45Z", "c2": "2026-08-12T18:29:10Z", "max": "2026-08-12T18:29:24Z", "c3": "2026-08-12T18:29:38Z", "c4": "2026-08-12T19:20:48Z", "tot": 27, "mag": 1.0006, "obs": 100, "altMax": 5, "azMax": 285.5, "altC1": 15, "azC1": 276.7, "sunset": "2026-08-12T19:00:54Z", "setsDuring": true}, {"n": "Tarragona", "cc": "ES", "lat": 41.1189, "lon": 1.2445, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:29:35Z", "visAlt": 4.4, "visAz": 286, "totVisible": true, "c1": "2026-08-12T17:35:35Z", "c2": "2026-08-12T18:29:29Z", "max": "2026-08-12T18:29:59Z", "c3": "2026-08-12T18:30:29Z", "c4": "2026-08-12T19:21:11Z", "tot": 60, "mag": 1.0032, "obs": 100, "altMax": 4.4, "azMax": 286, "altC1": 14.3, "azC1": 277.4, "sunset": "2026-08-12T18:57:25Z", "setsDuring": true}, {"n": "Castellón", "cc": "ES", "lat": 39.9864, "lon": -0.0513, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:31:22Z", "visAlt": 4.7, "visAz": 285.5, "totVisible": true, "c1": "2026-08-12T17:37:32Z", "c2": "2026-08-12T18:31:20Z", "max": "2026-08-12T18:32:07Z", "c3": "2026-08-12T18:32:54Z", "c4": "2026-08-12T19:23:23Z", "tot": 94, "mag": 1.0106, "obs": 100, "altMax": 4.6, "azMax": 285.6, "altC1": 14.7, "azC1": 277.2, "sunset": "2026-08-12T19:00:24Z", "setsDuring": true}, {"n": "Valencia", "cc": "ES", "lat": 39.4699, "lon": -0.3763, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:32:35Z", "visAlt": 4.6, "visAz": 285.5, "totVisible": true, "c1": "2026-08-12T17:38:25Z", "c2": "2026-08-12T18:32:30Z", "max": "2026-08-12T18:33:00Z", "c3": "2026-08-12T18:33:30Z", "c4": "2026-08-12T19:24:15Z", "tot": 60, "mag": 1.0032, "obs": 100, "altMax": 4.5, "azMax": 285.6, "altC1": 14.8, "azC1": 277.2, "sunset": "2026-08-12T19:00:43Z", "setsDuring": true}, {"n": "Palma", "cc": "ES", "lat": 39.5696, "lon": 2.6502, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:31:15Z", "visAlt": 2.7, "visAz": 287.2, "totVisible": true, "c1": "2026-08-12T17:38:05Z", "c2": "2026-08-12T18:31:06Z", "max": "2026-08-12T18:31:54Z", "c3": "2026-08-12T18:32:42Z", "c4": "2026-08-12T19:22:33Z", "tot": 96, "mag": 1.0148, "obs": 100, "altMax": 2.6, "azMax": 287.3, "altC1": 12.5, "azC1": 279, "sunset": "2026-08-12T18:48:48Z", "setsDuring": true}, {"n": "Ibiza", "cc": "ES", "lat": 38.9067, "lon": 1.4206, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:32:46Z", "visAlt": 3.2, "visAz": 286.7, "totVisible": true, "c1": "2026-08-12T17:39:16Z", "c2": "2026-08-12T18:32:46Z", "max": "2026-08-12T18:33:18Z", "c3": "2026-08-12T18:33:50Z", "c4": "2026-08-12T19:24:05Z", "tot": 64, "mag": 1.0038, "obs": 100, "altMax": 3.1, "azMax": 286.8, "altC1": 13.1, "azC1": 278.6, "sunset": "2026-08-12T18:52:29Z", "setsDuring": true}, {"n": "Maó (Menorca)", "cc": "ES", "lat": 39.8885, "lon": 4.2658, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:30:24Z", "visAlt": 1.9, "visAz": 288.1, "totVisible": true, "c1": "2026-08-12T17:37:24Z", "c2": "2026-08-12T18:30:16Z", "max": "2026-08-12T18:30:51Z", "c3": "2026-08-12T18:31:26Z", "c4": "2026-08-12T19:21:14Z", "tot": 70, "mag": 1.005, "obs": 100, "altMax": 1.8, "azMax": 288.1, "altC1": 11.5, "azC1": 279.8, "sunset": "2026-08-12T18:42:57Z", "setsDuring": true}, {"n": "Madrid", "cc": "ES", "lat": 40.4168, "lon": -3.7038, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:32:26Z", "visAlt": 7.3, "visAz": 283.3, "totVisible": false, "c1": "2026-08-12T17:36:46Z", "c2": null, "max": "2026-08-12T18:32:23Z", "c3": null, "c4": "2026-08-12T19:24:30Z", "tot": 0, "mag": 0.9988, "obs": 100, "altMax": 7.3, "azMax": 283.3, "altC1": 17.7, "azC1": 274.7, "sunset": "2026-08-12T19:15:49Z", "setsDuring": true}, {"n": "Tres Cantos", "cc": "ES", "lat": 40.6058, "lon": -3.7089, "tz": 2, "visObs": 100, "visT": "2026-08-12T18:31:56Z", "visAlt": 7.4, "visAz": 283.2, "totVisible": true, "c1": "2026-08-12T17:36:26Z", "c2": "2026-08-12T18:31:49Z", "max": "2026-08-12T18:32:05Z", "c3": "2026-08-12T18:32:22Z", "c4": "2026-08-12T19:24:14Z", "tot": 33, "mag": 1.0009, "obs": 100, "altMax": 7.4, "azMax": 283.3, "altC1": 17.8, "azC1": 274.5, "sunset": "2026-08-12T19:16:12Z", "setsDuring": true}, {"n": "Barcelona", "cc": "ES", "lat": 41.3874, "lon": 2.1686, "tz": 2, "visObs": 99.8, "visT": "2026-08-12T18:29:15Z", "visAlt": 3.9, "visAz": 286.5, "totVisible": false, "c1": "2026-08-12T17:35:05Z", "c2": null, "max": "2026-08-12T18:29:18Z", "c3": null, "c4": "2026-08-12T19:20:21Z", "tot": 0, "mag": 0.9966, "obs": 99.8, "altMax": 3.9, "azMax": 286.5, "altC1": 13.7, "azC1": 277.8, "sunset": "2026-08-12T18:54:15Z", "setsDuring": true}, {"n": "San Sebastián", "cc": "ES", "lat": 43.3183, "lon": -1.9812, "tz": 2, "visObs": 99.7, "visT": "2026-08-12T18:27:16Z", "visAlt": 7.7, "visAz": 283.2, "totVisible": false, "c1": "2026-08-12T17:31:46Z", "c2": null, "max": "2026-08-12T18:27:21Z", "c3": null, "c4": "2026-08-12T19:19:35Z", "tot": 0, "mag": 0.9954, "obs": 99.7, "altMax": 7.6, "azMax": 283.3, "altC1": 17.6, "azC1": 274.1, "sunset": "2026-08-12T19:14:50Z", "setsDuring": true}, {"n": "Sevilla", "cc": "ES", "lat": 37.3891, "lon": -5.9845, "tz": 2, "visObs": 94.6, "visT": "2026-08-12T18:37:39Z", "visAlt": 7.3, "visAz": 283.1, "totVisible": false, "c1": "2026-08-12T17:41:59Z", "c2": null, "max": "2026-08-12T18:37:40Z", "c3": null, "c4": "2026-08-12T19:29:43Z", "tot": 0, "mag": 0.9508, "obs": 94.6, "altMax": 7.3, "azMax": 283.1, "altC1": 18.2, "azC1": 275, "sunset": "2026-08-12T19:19:20Z", "setsDuring": true}, {"n": "Málaga", "cc": "ES", "lat": 36.7213, "lon": -4.4214, "tz": 2, "visObs": 94.5, "visT": "2026-08-12T18:38:21Z", "visAlt": 5.9, "visAz": 284.2, "totVisible": false, "c1": "2026-08-12T17:43:11Z", "c2": null, "max": "2026-08-12T18:38:20Z", "c3": null, "c4": "2026-08-12T19:29:54Z", "tot": 0, "mag": 0.9503, "obs": 94.5, "altMax": 5.9, "azMax": 284.2, "altC1": 16.7, "azC1": 276.3, "sunset": "2026-08-12T19:11:56Z", "setsDuring": true}, {"n": "Porto", "cc": "PT", "lat": 41.1579, "lon": -8.6291, "tz": 1, "visObs": 98.2, "visT": "2026-08-12T18:32:08Z", "visAlt": 11.1, "visAz": 280.1, "totVisible": false, "c1": "2026-08-12T17:34:58Z", "c2": null, "max": "2026-08-12T18:32:04Z", "c3": null, "c4": "2026-08-12T19:25:25Z", "tot": 0, "mag": 0.9804, "obs": 98.2, "altMax": 11.1, "azMax": 280.1, "altC1": 21.8, "azC1": 271, "sunset": "2026-08-12T19:36:57Z", "setsDuring": false}, {"n": "Lisboa", "cc": "PT", "lat": 38.7223, "lon": -9.1393, "tz": 1, "visObs": 94.4, "visT": "2026-08-12T18:36:10Z", "visAlt": 10.3, "visAz": 280.8, "totVisible": false, "c1": "2026-08-12T17:39:20Z", "c2": null, "max": "2026-08-12T18:36:09Z", "c3": null, "c4": "2026-08-12T19:29:08Z", "tot": 0, "mag": 0.9495, "obs": 94.4, "altMax": 10.3, "azMax": 280.8, "altC1": 21.3, "azC1": 272.3, "sunset": "2026-08-12T19:34:21Z", "setsDuring": false}, {"n": "Milan", "cc": "IT", "lat": 45.4642, "lon": 9.19, "tz": 2, "visObs": 92.3, "visT": "2026-08-12T18:20:43Z", "visAlt": 1.9, "visAz": 289.6, "totVisible": false, "c1": "2026-08-12T17:27:43Z", "c2": null, "max": "2026-08-12T18:20:44Z", "c3": null, "c4": "2026-08-12T19:11:00Z", "tot": 0, "mag": 0.9329, "obs": 92.3, "altMax": 1.9, "azMax": 289.6, "altC1": 10.7, "azC1": 280.4, "sunset": "2026-08-12T18:34:58Z", "setsDuring": true}, {"n": "Turin", "cc": "IT", "lat": 45.0703, "lon": 7.6869, "tz": 2, "visObs": 93.3, "visT": "2026-08-12T18:21:52Z", "visAlt": 2.6, "visAz": 288.8, "totVisible": false, "c1": "2026-08-12T17:28:32Z", "c2": null, "max": "2026-08-12T18:21:52Z", "c3": null, "c4": "2026-08-12T19:12:21Z", "tot": 0, "mag": 0.9409, "obs": 93.3, "altMax": 2.6, "azMax": 288.8, "altC1": 11.5, "azC1": 279.6, "sunset": "2026-08-12T18:40:04Z", "setsDuring": true}, {"n": "Genoa", "cc": "IT", "lat": 44.4056, "lon": 8.9463, "tz": 2, "visObs": 93.6, "visT": "2026-08-12T18:22:28Z", "visAlt": 1.5, "visAz": 289.8, "totVisible": false, "c1": "2026-08-12T17:29:28Z", "c2": null, "max": "2026-08-12T18:22:25Z", "c3": null, "c4": "2026-08-12T19:12:35Z", "tot": 0, "mag": 0.943, "obs": 93.6, "altMax": 1.5, "azMax": 289.8, "altC1": 10.3, "azC1": 280.7, "sunset": "2026-08-12T18:33:32Z", "setsDuring": true}, {"n": "Venice", "cc": "IT", "lat": 45.4408, "lon": 12.3155, "tz": 2, "visObs": 91.2, "visT": "2026-08-12T18:19:36Z", "visAlt": 0.3, "visAz": 291.6, "totVisible": false, "c1": "2026-08-12T17:27:16Z", "c2": null, "max": "2026-08-12T18:19:35Z", "c3": null, "c4": "2026-08-12T19:09:16Z", "tot": 0, "mag": 0.9247, "obs": 91.2, "altMax": 0.3, "azMax": 291.6, "altC1": 8.6, "azC1": 282.5, "sunset": "2026-08-12T18:22:25Z", "setsDuring": true}, {"n": "Florence", "cc": "IT", "lat": 43.7696, "lon": 11.2558, "tz": 2, "visObs": 93.5, "visT": "2026-08-12T18:22:27Z", "visAlt": -0.1, "visAz": 291.4, "totVisible": false, "c1": "2026-08-12T17:30:07Z", "c2": null, "max": "2026-08-12T18:22:27Z", "c3": null, "c4": "2026-08-12T19:12:06Z", "tot": 0, "mag": 0.9426, "obs": 93.5, "altMax": -0.1, "azMax": 291.4, "altC1": 8.5, "azC1": 282.5, "sunset": "2026-08-12T18:22:55Z", "setsDuring": true}, {"n": "Rome", "cc": "IT", "lat": 41.9028, "lon": 12.4964, "tz": 2, "visObs": 74.8, "visT": "2026-08-12T18:13:57Z", "visAlt": -0.2, "visAz": 290.7, "totVisible": false, "c1": "2026-08-12T17:32:47Z", "c2": null, "max": "2026-08-12T18:24:36Z", "c3": null, "c4": "2026-08-12T19:13:46Z", "tot": 0, "mag": 0.9585, "obs": 95.5, "altMax": -2.4, "azMax": 292.5, "altC1": 6.7, "azC1": 284, "sunset": "2026-08-12T18:14:01Z", "setsDuring": true}, {"n": "Naples", "cc": "IT", "lat": 40.8518, "lon": 14.2681, "tz": 2, "visObs": 51, "visT": "2026-08-12T18:04:47Z", "visAlt": -0.3, "visAz": 290.4, "totVisible": false, "c1": "2026-08-12T17:33:57Z", "c2": null, "max": "2026-08-12T18:25:14Z", "c3": null, "c4": "2026-08-12T19:13:56Z", "tot": 0, "mag": 0.9662, "obs": 96.4, "altMax": -4.2, "azMax": 293.8, "altC1": 5, "azC1": 285.4, "sunset": "2026-08-12T18:04:51Z", "setsDuring": true}, {"n": "Palermo", "cc": "IT", "lat": 38.1157, "lon": 13.3615, "tz": 2, "visObs": 38.3, "visT": "2026-08-12T18:03:18Z", "visAlt": -0.3, "visAz": 289.5, "totVisible": false, "c1": "2026-08-12T17:38:18Z", "c2": "2026-08-12T18:29:10Z", "max": "2026-08-12T18:29:23Z", "c3": "2026-08-12T18:29:36Z", "c4": "2026-08-12T19:17:49Z", "tot": 26, "mag": 1.0007, "obs": 100, "altMax": -5.4, "azMax": 293.7, "altC1": 4.2, "azC1": 285.7, "sunset": "2026-08-12T18:03:19Z", "setsDuring": true}, {"n": "Paris", "cc": "FR", "lat": 48.8566, "lon": 2.3522, "tz": 2, "visObs": 92.1, "visT": "2026-08-12T18:17:25Z", "visAlt": 7.7, "visAz": 283.8, "totVisible": false, "c1": "2026-08-12T17:22:15Z", "c2": null, "max": "2026-08-12T18:17:21Z", "c3": null, "c4": "2026-08-12T19:09:27Z", "tot": 0, "mag": 0.9307, "obs": 92.1, "altMax": 7.7, "azMax": 283.8, "altC1": 16.6, "azC1": 273.7, "sunset": "2026-08-12T19:10:43Z", "setsDuring": false}, {"n": "Lyon", "cc": "FR", "lat": 45.764, "lon": 4.8357, "tz": 2, "visObs": 93.8, "visT": "2026-08-12T18:21:45Z", "visAlt": 4.6, "visAz": 286.7, "totVisible": false, "c1": "2026-08-12T17:27:35Z", "c2": null, "max": "2026-08-12T18:21:42Z", "c3": null, "c4": "2026-08-12T19:12:51Z", "tot": 0, "mag": 0.9446, "obs": 93.8, "altMax": 4.6, "azMax": 286.7, "altC1": 13.7, "azC1": 277.3, "sunset": "2026-08-12T18:53:04Z", "setsDuring": true}, {"n": "Marseille", "cc": "FR", "lat": 43.2965, "lon": 5.3698, "tz": 2, "visObs": 96.3, "visT": "2026-08-12T18:25:21Z", "visAlt": 3, "visAz": 287.8, "totVisible": false, "c1": "2026-08-12T17:31:41Z", "c2": null, "max": "2026-08-12T18:25:21Z", "c3": null, "c4": "2026-08-12T19:16:03Z", "tot": 0, "mag": 0.965, "obs": 96.3, "altMax": 3, "azMax": 287.8, "altC1": 12.3, "azC1": 278.9, "sunset": "2026-08-12T18:45:25Z", "setsDuring": true}, {"n": "Nice", "cc": "FR", "lat": 43.7102, "lon": 7.262, "tz": 2, "visObs": 95, "visT": "2026-08-12T18:24:09Z", "visAlt": 2.1, "visAz": 288.9, "totVisible": false, "c1": "2026-08-12T17:30:49Z", "c2": null, "max": "2026-08-12T18:24:04Z", "c3": null, "c4": "2026-08-12T19:14:27Z", "tot": 0, "mag": 0.9547, "obs": 95, "altMax": 2.1, "azMax": 288.9, "altC1": 11.2, "azC1": 280, "sunset": "2026-08-12T18:38:44Z", "setsDuring": true}, {"n": "Toulouse", "cc": "FR", "lat": 43.6047, "lon": 1.4442, "tz": 2, "visObs": 97.8, "visT": "2026-08-12T18:26:01Z", "visAlt": 5.6, "visAz": 285.3, "totVisible": false, "c1": "2026-08-12T17:31:21Z", "c2": null, "max": "2026-08-12T18:26:03Z", "c3": null, "c4": "2026-08-12T19:17:36Z", "tot": 0, "mag": 0.9772, "obs": 97.8, "altMax": 5.6, "azMax": 285.3, "altC1": 15.2, "azC1": 276.2, "sunset": "2026-08-12T19:01:45Z", "setsDuring": true}, {"n": "Bordeaux", "cc": "FR", "lat": 44.8378, "lon": -0.5792, "tz": 2, "visObs": 97.5, "visT": "2026-08-12T18:24:31Z", "visAlt": 7.5, "visAz": 283.5, "totVisible": false, "c1": "2026-08-12T17:29:11Z", "c2": null, "max": "2026-08-12T18:24:35Z", "c3": null, "c4": "2026-08-12T19:16:44Z", "tot": 0, "mag": 0.9748, "obs": 97.5, "altMax": 7.5, "azMax": 283.5, "altC1": 17.1, "azC1": 274.1, "sunset": "2026-08-12T19:12:34Z", "setsDuring": true}, {"n": "Biarritz", "cc": "FR", "lat": 43.4832, "lon": -1.5586, "tz": 2, "visObs": 99.4, "visT": "2026-08-12T18:27:00Z", "visAlt": 7.4, "visAz": 283.5, "totVisible": false, "c1": "2026-08-12T17:31:30Z", "c2": null, "max": "2026-08-12T18:26:59Z", "c3": null, "c4": "2026-08-12T19:19:09Z", "tot": 0, "mag": 0.9918, "obs": 99.4, "altMax": 7.4, "azMax": 283.5, "altC1": 17.3, "azC1": 274.2, "sunset": "2026-08-12T19:13:30Z", "setsDuring": true}, {"n": "Nantes", "cc": "FR", "lat": 47.2184, "lon": -1.5536, "tz": 2, "visObs": 95.7, "visT": "2026-08-12T18:20:54Z", "visAlt": 9.3, "visAz": 281.9, "totVisible": false, "c1": "2026-08-12T17:24:54Z", "c2": null, "max": "2026-08-12T18:20:51Z", "c3": null, "c4": "2026-08-12T19:13:34Z", "tot": 0, "mag": 0.9597, "obs": 95.7, "altMax": 9.3, "azMax": 281.9, "altC1": 18.7, "azC1": 271.9, "sunset": "2026-08-12T19:22:06Z", "setsDuring": false}, {"n": "Brest", "cc": "FR", "lat": 48.3904, "lon": -4.4861, "tz": 2, "visObs": 96.4, "visT": "2026-08-12T18:19:16Z", "visAlt": 11.7, "visAz": 279.3, "totVisible": false, "c1": "2026-08-12T17:22:26Z", "c2": null, "max": "2026-08-12T18:19:18Z", "c3": null, "c4": "2026-08-12T19:12:50Z", "tot": 0, "mag": 0.9656, "obs": 96.4, "altMax": 11.7, "azMax": 279.3, "altC1": 21.1, "azC1": 268.8, "sunset": "2026-08-12T19:36:48Z", "setsDuring": false}, {"n": "Strasbourg", "cc": "FR", "lat": 48.5734, "lon": 7.7521, "tz": 2, "visObs": 89.8, "visT": "2026-08-12T18:16:20Z", "visAlt": 4.4, "visAz": 287.6, "totVisible": false, "c1": "2026-08-12T17:22:40Z", "c2": null, "max": "2026-08-12T18:16:24Z", "c3": null, "c4": "2026-08-12T19:07:23Z", "tot": 0, "mag": 0.913, "obs": 89.8, "altMax": 4.4, "azMax": 287.6, "altC1": 13, "azC1": 277.9, "sunset": "2026-08-12T18:48:24Z", "setsDuring": true}, {"n": "London", "cc": "GB", "lat": 51.5074, "lon": -0.1278, "tz": 1, "visObs": 91.3, "visT": "2026-08-12T18:13:20Z", "visAlt": 10.4, "visAz": 280.8, "totVisible": false, "c1": "2026-08-12T17:17:20Z", "c2": null, "max": "2026-08-12T18:13:21Z", "c3": null, "c4": "2026-08-12T19:06:21Z", "tot": 0, "mag": 0.9249, "obs": 91.3, "altMax": 10.4, "azMax": 280.8, "altC1": 19.1, "azC1": 270.1, "sunset": "2026-08-12T19:28:09Z", "setsDuring": false}, {"n": "Edinburgh", "cc": "GB", "lat": 55.9533, "lon": -3.1883, "tz": 1, "visObs": 90.6, "visT": "2026-08-12T18:05:52Z", "visAlt": 13.9, "visAz": 276, "totVisible": false, "c1": "2026-08-12T17:08:42Z", "c2": null, "max": "2026-08-12T18:05:52Z", "c3": null, "c4": "2026-08-12T19:00:07Z", "tot": 0, "mag": 0.9192, "obs": 90.6, "altMax": 13.9, "azMax": 276, "altC1": 21.9, "azC1": 264.1, "sunset": "2026-08-12T19:55:30Z", "setsDuring": false}, {"n": "Manchester", "cc": "GB", "lat": 53.4808, "lon": -2.2426, "tz": 1, "visObs": 91.3, "visT": "2026-08-12T18:10:07Z", "visAlt": 12.5, "visAz": 278.2, "totVisible": false, "c1": "2026-08-12T17:13:27Z", "c2": null, "max": "2026-08-12T18:10:11Z", "c3": null, "c4": "2026-08-12T19:03:55Z", "tot": 0, "mag": 0.9246, "obs": 91.3, "altMax": 12.5, "azMax": 278.2, "altC1": 20.9, "azC1": 266.9, "sunset": "2026-08-12T19:42:52Z", "setsDuring": false}, {"n": "Cardiff", "cc": "GB", "lat": 51.4816, "lon": -3.1791, "tz": 1, "visObs": 93.2, "visT": "2026-08-12T18:13:49Z", "visAlt": 12.2, "visAz": 278.6, "totVisible": false, "c1": "2026-08-12T17:16:59Z", "c2": null, "max": "2026-08-12T18:13:47Z", "c3": null, "c4": "2026-08-12T19:07:27Z", "tot": 0, "mag": 0.9393, "obs": 93.2, "altMax": 12.2, "azMax": 278.6, "altC1": 21, "azC1": 267.6, "sunset": "2026-08-12T19:40:15Z", "setsDuring": false}, {"n": "Dublin", "cc": "IE", "lat": 53.3498, "lon": -6.2603, "tz": 1, "visObs": 93.9, "visT": "2026-08-12T18:10:46Z", "visAlt": 14.7, "visAz": 275.2, "totVisible": false, "c1": "2026-08-12T17:12:56Z", "c2": null, "max": "2026-08-12T18:10:42Z", "c3": null, "c4": "2026-08-12T19:05:18Z", "tot": 0, "mag": 0.9453, "obs": 93.9, "altMax": 14.7, "azMax": 275.2, "altC1": 23.3, "azC1": 263.5, "sunset": "2026-08-12T19:58:28Z", "setsDuring": false}, {"n": "Cork", "cc": "IE", "lat": 51.8985, "lon": -8.4756, "tz": 1, "visObs": 96.4, "visT": "2026-08-12T18:13:27Z", "visAlt": 15.5, "visAz": 274.4, "totVisible": false, "c1": "2026-08-12T17:15:07Z", "c2": null, "max": "2026-08-12T18:13:23Z", "c3": null, "c4": "2026-08-12T19:08:18Z", "tot": 0, "mag": 0.9651, "obs": 96.4, "altMax": 15.6, "azMax": 274.3, "altC1": 24.5, "azC1": 262.8, "sunset": "2026-08-12T20:02:41Z", "setsDuring": false}, {"n": "Brussels", "cc": "BE", "lat": 50.8503, "lon": 4.3517, "tz": 2, "visObs": 89.5, "visT": "2026-08-12T18:13:38Z", "visAlt": 7.5, "visAz": 284.4, "totVisible": false, "c1": "2026-08-12T17:18:48Z", "c2": null, "max": "2026-08-12T18:13:36Z", "c3": null, "c4": "2026-08-12T19:05:35Z", "tot": 0, "mag": 0.9104, "obs": 89.5, "altMax": 7.5, "azMax": 284.4, "altC1": 16, "azC1": 274, "sunset": "2026-08-12T19:08:18Z", "setsDuring": false}, {"n": "Amsterdam", "cc": "NL", "lat": 52.3676, "lon": 4.9041, "tz": 2, "visObs": 88.2, "visT": "2026-08-12T18:10:58Z", "visAlt": 8, "visAz": 284.1, "totVisible": false, "c1": "2026-08-12T17:16:08Z", "c2": null, "max": "2026-08-12T18:10:58Z", "c3": null, "c4": "2026-08-12T19:03:02Z", "tot": 0, "mag": 0.9002, "obs": 88.2, "altMax": 8, "azMax": 284.1, "altC1": 16.2, "azC1": 273.5, "sunset": "2026-08-12T19:10:42Z", "setsDuring": false}, {"n": "Berlin", "cc": "DE", "lat": 52.52, "lon": 13.405, "tz": 2, "visObs": 84.8, "visT": "2026-08-12T18:08:20Z", "visAlt": 3.5, "visAz": 290.2, "totVisible": false, "c1": "2026-08-12T17:15:30Z", "c2": null, "max": "2026-08-12T18:08:25Z", "c3": null, "c4": "2026-08-12T18:58:55Z", "tot": 0, "mag": 0.874, "obs": 84.8, "altMax": 3.5, "azMax": 290.2, "altC1": 11.2, "azC1": 279.9, "sunset": "2026-08-12T18:37:14Z", "setsDuring": true}, {"n": "Munich", "cc": "DE", "lat": 48.1351, "lon": 11.582, "tz": 2, "visObs": 88.8, "visT": "2026-08-12T18:15:51Z", "visAlt": 2.1, "visAz": 290.4, "totVisible": false, "c1": "2026-08-12T17:23:01Z", "c2": null, "max": "2026-08-12T18:15:49Z", "c3": null, "c4": "2026-08-12T19:06:01Z", "tot": 0, "mag": 0.9051, "obs": 88.8, "altMax": 2.1, "azMax": 290.4, "altC1": 10.3, "azC1": 280.8, "sunset": "2026-08-12T18:31:57Z", "setsDuring": true}, {"n": "Frankfurt", "cc": "DE", "lat": 50.1109, "lon": 8.6821, "tz": 2, "visObs": 88.1, "visT": "2026-08-12T18:13:40Z", "visAlt": 4.7, "visAz": 287.7, "totVisible": false, "c1": "2026-08-12T17:20:00Z", "c2": null, "max": "2026-08-12T18:13:41Z", "c3": null, "c4": "2026-08-12T19:04:42Z", "tot": 0, "mag": 0.9001, "obs": 88.1, "altMax": 4.7, "azMax": 287.7, "altC1": 13, "azC1": 277.7, "sunset": "2026-08-12T18:48:52Z", "setsDuring": true}, {"n": "Hamburg", "cc": "DE", "lat": 53.5511, "lon": 9.9937, "tz": 2, "visObs": 85.4, "visT": "2026-08-12T18:07:50Z", "visAlt": 5.8, "visAz": 287.3, "totVisible": false, "c1": "2026-08-12T17:14:00Z", "c2": null, "max": "2026-08-12T18:07:47Z", "c3": null, "c4": "2026-08-12T18:59:03Z", "tot": 0, "mag": 0.8782, "obs": 85.4, "altMax": 5.8, "azMax": 287.3, "altC1": 13.6, "azC1": 276.8, "sunset": "2026-08-12T18:54:13Z", "setsDuring": true}, {"n": "Cologne", "cc": "DE", "lat": 50.9375, "lon": 6.9603, "tz": 2, "visObs": 88.2, "visT": "2026-08-12T18:12:49Z", "visAlt": 6.1, "visAz": 286.2, "totVisible": false, "c1": "2026-08-12T17:18:39Z", "c2": null, "max": "2026-08-12T18:12:50Z", "c3": null, "c4": "2026-08-12T19:04:18Z", "tot": 0, "mag": 0.9007, "obs": 88.2, "altMax": 6.1, "azMax": 286.2, "altC1": 14.4, "azC1": 275.9, "sunset": "2026-08-12T18:58:08Z", "setsDuring": true}, {"n": "Zurich", "cc": "CH", "lat": 47.3769, "lon": 8.5417, "tz": 2, "visObs": 90.6, "visT": "2026-08-12T18:17:57Z", "visAlt": 3.3, "visAz": 288.6, "totVisible": false, "c1": "2026-08-12T17:24:37Z", "c2": null, "max": "2026-08-12T18:18:01Z", "c3": null, "c4": "2026-08-12T19:08:41Z", "tot": 0, "mag": 0.9193, "obs": 90.6, "altMax": 3.3, "azMax": 288.6, "altC1": 12, "azC1": 279, "sunset": "2026-08-12T18:42:10Z", "setsDuring": true}, {"n": "Geneva", "cc": "CH", "lat": 46.2044, "lon": 6.1432, "tz": 2, "visObs": 92.7, "visT": "2026-08-12T18:20:36Z", "visAlt": 4.1, "visAz": 287.4, "totVisible": false, "c1": "2026-08-12T17:26:46Z", "c2": null, "max": "2026-08-12T18:20:37Z", "c3": null, "c4": "2026-08-12T19:11:34Z", "tot": 0, "mag": 0.9363, "obs": 92.7, "altMax": 4.1, "azMax": 287.4, "altC1": 13, "azC1": 278, "sunset": "2026-08-12T18:48:53Z", "setsDuring": true}, {"n": "Vienna", "cc": "AT", "lat": 48.2082, "lon": 16.3738, "tz": 2, "visObs": 87.1, "visT": "2026-08-12T18:12:54Z", "visAlt": -0.2, "visAz": 293.4, "totVisible": false, "c1": "2026-08-12T17:22:04Z", "c2": null, "max": "2026-08-12T18:13:51Z", "c3": null, "c4": "2026-08-12T19:03:14Z", "tot": 0, "mag": 0.8939, "obs": 87.3, "altMax": -0.5, "azMax": 293.6, "altC1": 7.4, "azC1": 284.1, "sunset": "2026-08-12T18:13:00Z", "setsDuring": true}, {"n": "Prague", "cc": "CZ", "lat": 50.0755, "lon": 14.4378, "tz": 2, "visObs": 86.2, "visT": "2026-08-12T18:11:45Z", "visAlt": 1.7, "visAz": 291.7, "totVisible": false, "c1": "2026-08-12T17:19:25Z", "c2": null, "max": "2026-08-12T18:11:49Z", "c3": null, "c4": "2026-08-12T19:01:48Z", "tot": 0, "mag": 0.8852, "obs": 86.2, "altMax": 1.7, "azMax": 291.7, "altC1": 9.5, "azC1": 281.9, "sunset": "2026-08-12T18:25:47Z", "setsDuring": true}, {"n": "Warsaw", "cc": "PL", "lat": 52.2297, "lon": 21.0122, "tz": 2, "visObs": 83.2, "visT": "2026-08-12T18:05:49Z", "visAlt": -0.2, "visAz": 295.7, "totVisible": false, "c1": "2026-08-12T17:14:39Z", "c2": null, "max": "2026-08-12T18:06:01Z", "c3": null, "c4": "2026-08-12T18:55:16Z", "tot": 0, "mag": 0.8613, "obs": 83.2, "altMax": -0.3, "azMax": 295.7, "altC1": 6.7, "azC1": 285.7, "sunset": "2026-08-12T18:05:55Z", "setsDuring": true}, {"n": "Copenhagen", "cc": "DK", "lat": 55.6761, "lon": 12.5683, "tz": 2, "visObs": 83.5, "visT": "2026-08-12T18:03:40Z", "visAlt": 5.6, "visAz": 288.3, "totVisible": false, "c1": "2026-08-12T17:10:10Z", "c2": null, "max": "2026-08-12T18:03:38Z", "c3": null, "c4": "2026-08-12T18:54:47Z", "tot": 0, "mag": 0.8633, "obs": 83.5, "altMax": 5.6, "azMax": 288.3, "altC1": 12.9, "azC1": 277.6, "sunset": "2026-08-12T18:51:31Z", "setsDuring": true}, {"n": "Stockholm", "cc": "SE", "lat": 59.3293, "lon": 18.0686, "tz": 2, "visObs": 81, "visT": "2026-08-12T17:56:09Z", "visAlt": 5, "visAz": 291, "totVisible": false, "c1": "2026-08-12T17:03:19Z", "c2": null, "max": "2026-08-12T17:56:13Z", "c3": null, "c4": "2026-08-12T18:47:05Z", "tot": 0, "mag": 0.8435, "obs": 81, "altMax": 5, "azMax": 291, "altC1": 11.4, "azC1": 279.9, "sunset": "2026-08-12T18:45:05Z", "setsDuring": true}, {"n": "Oslo", "cc": "NO", "lat": 59.9139, "lon": 10.7522, "tz": 2, "visObs": 83, "visT": "2026-08-12T17:57:02Z", "visAlt": 8.6, "visAz": 285, "totVisible": false, "c1": "2026-08-12T17:02:42Z", "c2": null, "max": "2026-08-12T17:57:04Z", "c3": null, "c4": "2026-08-12T18:49:12Z", "tot": 0, "mag": 0.8594, "obs": 83, "altMax": 8.6, "azMax": 285, "altC1": 15.2, "azC1": 273.4, "sunset": "2026-08-12T19:17:09Z", "setsDuring": false}, {"n": "Helsinki", "cc": "FI", "lat": 60.1699, "lon": 24.9384, "tz": 3, "visObs": 79.6, "visT": "2026-08-12T17:52:40Z", "visAlt": 2.7, "visAz": 296.1, "totVisible": false, "c1": "2026-08-12T17:00:50Z", "c2": null, "max": "2026-08-12T17:52:42Z", "c3": null, "c4": "2026-08-12T18:42:46Z", "tot": 0, "mag": 0.833, "obs": 79.6, "altMax": 2.7, "azMax": 296.1, "altC1": 8.6, "azC1": 285, "sunset": "2026-08-12T18:21:48Z", "setsDuring": true}, {"n": "Athens", "cc": "GR", "lat": 37.9838, "lon": 23.7275, "tz": 3, "visObs": 0, "visT": null, "visAlt": null, "visAz": null, "totVisible": false, "c1": "2026-08-12T17:34:33Z", "c2": null, "max": "2026-08-12T18:23:34Z", "c3": null, "c4": "2026-08-12T19:10:24Z", "tot": 0, "mag": 0.9903, "obs": 99.2, "altMax": -11.8, "azMax": 299.6, "altC1": -3, "azC1": 291.5, "sunset": "2026-08-12T17:21:39Z", "setsDuring": true}, {"n": "Budapest", "cc": "HU", "lat": 47.4979, "lon": 19.0402, "tz": 2, "visObs": 65.7, "visT": "2026-08-12T18:00:23Z", "visAlt": -0.2, "visAz": 293, "totVisible": false, "c1": "2026-08-12T17:22:33Z", "c2": null, "max": "2026-08-12T18:13:42Z", "c3": null, "c4": "2026-08-12T19:02:33Z", "tot": 0, "mag": 0.8948, "obs": 87.4, "altMax": -2.6, "azMax": 295.5, "altC1": 5.5, "azC1": 286.2, "sunset": "2026-08-12T18:00:31Z", "setsDuring": true}, {"n": "Zagreb", "cc": "HR", "lat": 45.815, "lon": 15.9819, "tz": 2, "visObs": 76.7, "visT": "2026-08-12T18:08:35Z", "visAlt": -0.3, "visAz": 292.3, "totVisible": false, "c1": "2026-08-12T17:25:55Z", "c2": null, "max": "2026-08-12T18:17:29Z", "c3": null, "c4": "2026-08-12T19:06:36Z", "tot": 0, "mag": 0.9136, "obs": 89.8, "altMax": -2, "azMax": 293.9, "altC1": 6.5, "azC1": 284.8, "sunset": "2026-08-12T18:08:39Z", "setsDuring": true}, {"n": "Casablanca", "cc": "MA", "lat": 33.5731, "lon": -7.5898, "tz": 1, "visObs": 86.9, "visT": "2026-08-12T18:43:49Z", "visAlt": 6.5, "visAz": 283.5, "totVisible": false, "c1": "2026-08-12T17:48:39Z", "c2": null, "max": "2026-08-12T18:43:55Z", "c3": null, "c4": "2026-08-12T19:35:25Z", "tot": 0, "mag": 0.8901, "obs": 86.9, "altMax": 6.5, "azMax": 283.5, "altC1": 17.8, "azC1": 276.3, "sunset": "2026-08-12T19:19:22Z", "setsDuring": true}, {"n": "Marrakesh", "cc": "MA", "lat": 31.6295, "lon": -7.9811, "tz": 1, "visObs": 82.9, "visT": "2026-08-12T18:46:55Z", "visAlt": 5.8, "visAz": 283.9, "totVisible": false, "c1": "2026-08-12T17:52:05Z", "c2": null, "max": "2026-08-12T18:46:54Z", "c3": null, "c4": "2026-08-12T19:37:59Z", "tot": 0, "mag": 0.8588, "obs": 82.9, "altMax": 5.8, "azMax": 283.9, "altC1": 17.2, "azC1": 277.1, "sunset": "2026-08-12T19:17:55Z", "setsDuring": true}, {"n": "Algiers", "cc": "DZ", "lat": 36.7538, "lon": 3.0588, "tz": 1, "visObs": 98.4, "visT": "2026-08-12T18:35:48Z", "visAlt": 0.9, "visAz": 288.2, "totVisible": false, "c1": "2026-08-12T17:42:38Z", "c2": null, "max": "2026-08-12T18:35:53Z", "c3": null, "c4": "2026-08-12T19:25:57Z", "tot": 0, "mag": 0.9828, "obs": 98.4, "altMax": 0.9, "azMax": 288.2, "altC1": 10.9, "azC1": 280.5, "sunset": "2026-08-12T18:42:05Z", "setsDuring": true}, {"n": "Tunis", "cc": "TN", "lat": 36.8065, "lon": 10.1815, "tz": 1, "visObs": 54.8, "visT": "2026-08-12T18:13:39Z", "visAlt": -0.3, "visAz": 289.2, "totVisible": false, "c1": "2026-08-12T17:41:09Z", "c2": "2026-08-12T18:32:12Z", "max": "2026-08-12T18:32:43Z", "c3": "2026-08-12T18:33:14Z", "c4": "2026-08-12T19:21:29Z", "tot": 62, "mag": 1.0044, "obs": 100, "altMax": -4.2, "azMax": 292.1, "altC1": 5.7, "azC1": 284.4, "sunset": "2026-08-12T18:13:43Z", "setsDuring": true}, {"n": "Reykjanesbær", "cc": "IS", "lat": 64.0058, "lon": -22.5644, "tz": 0, "visObs": 100, "visT": "2026-08-12T17:48:13Z", "visAlt": 24.9, "visAz": 252.1, "totVisible": true, "c1": "2026-08-12T16:47:13Z", "c2": "2026-08-12T17:48:05Z", "max": "2026-08-12T17:48:55Z", "c3": "2026-08-12T17:49:44Z", "c4": "2026-08-12T18:47:53Z", "tot": 99, "mag": 1.006, "obs": 100, "altMax": 24.8, "azMax": 252.2, "altC1": 30.9, "azC1": 236.8, "sunset": "2026-08-12T21:54:10Z", "setsDuring": false}, {"n": "Nuuk", "cc": "GL", "lat": 64.1836, "lon": -51.7214, "tz": -2, "visObs": 78.9, "visT": "2026-08-12T17:35:44Z", "visAlt": 36.3, "visAz": 218.1, "totVisible": false, "c1": "2026-08-12T16:30:04Z", "c2": null, "max": "2026-08-12T17:35:48Z", "c3": null, "c4": "2026-08-12T18:39:15Z", "tot": 0, "mag": 0.8257, "obs": 78.9, "altMax": 36.2, "azMax": 218.1, "altC1": 39.6, "azC1": 198.4, "sunset": "2026-08-12T23:51:46Z", "setsDuring": false}];
+var PATH   = [[-30, 68.465, 70, 70, 82], [-29.5, 67.423, 70, 70, 102.8], [-29, 66.413, 70, 70, 116.9], [-28.5, 65.434, 70, 70, 126.6], [-28, 64.483, 70, 70, 133], [-27.5, 63.561, 70, 70, 136.5], [-27, 62.665, 69.495, 70, 137.6], [-26.5, 61.795, 68.144, 70, 138], [-26, 60.95, 66.859, 70, 138.2], [-25.5, 60.129, 65.714, 70, 138.2], [-25, 59.333, 64.597, 70, 138.2], [-24.5, 58.56, 63.537, 70, 138], [-24, 57.81, 62.537, 70, 137.7], [-23.5, 57.082, 61.585, 70, 137.3], [-23, 56.376, 60.668, 68.918, 136.9], [-22.5, 55.692, 59.796, 66.796, 136.4], [-22, 55.027, 58.956, 65.187, 135.8], [-21.5, 54.383, 58.155, 63.82, 135.2], [-21, 53.758, 57.394, 62.605, 134.5], [-20.5, 53.153, 56.646, 61.499, 133.8], [-20, 52.565, 55.925, 60.477, 133.1], [-19.5, 51.995, 55.243, 59.525, 132.3], [-19, 51.443, 54.577, 58.631, 131.5], [-18.5, 50.907, 53.932, 57.788, 130.7], [-18, 50.387, 53.331, 56.989, 129.9], [-17.5, 49.882, 52.727, 56.23, 129], [-17, 49.393, 52.145, 55.507, 128.2], [-16.5, 48.918, 51.597, 54.816, 127.3], [-16, 48.458, 51.062, 54.156, 126.4], [-15.5, 48.011, 50.541, 53.524, 125.5], [-15, 47.577, 50.046, 52.917, 124.6], [-14.5, 47.156, 49.558, 52.335, 123.7], [-14, 46.747, 49.089, 51.775, 122.9], [-13.5, 46.351, 48.627, 51.237, 122], [-13, 45.965, 48.195, 50.718, 121.1], [-12.5, 45.592, 47.768, 50.219, 120.2], [-12, 45.229, 47.356, 49.737, 119.3], [-11.5, 44.876, 46.952, 49.273, 118.4], [-11, 44.534, 46.56, 48.824, 117.5], [-10.5, 44.201, 46.19, 48.392, 116.6], [-10, 43.878, 45.828, 47.973, 115.8], [-9.5, 43.565, 45.474, 47.569, 114.9], [-9, 43.26, 45.135, 47.178, 114], [-8.5, 42.965, 44.795, 46.801, 113.2], [-8, 42.677, 44.48, 46.435, 112.3], [-7.5, 42.398, 44.168, 46.081, 111.5], [-7, 42.127, 43.865, 45.739, 110.6], [-6.5, 41.864, 43.567, 45.408, 109.8], [-6, 41.609, 43.285, 45.087, 109], [-5.5, 41.361, 43.01, 44.776, 108.2], [-5, 41.12, 42.74, 44.475, 107.4], [-4.5, 40.886, 42.479, 44.184, 106.6], [-4, 40.659, 42.228, 43.901, 105.8], [-3.5, 40.438, 41.983, 43.628, 105], [-3, 40.224, 41.748, 43.363, 104.3], [-2.5, 40.016, 41.514, 43.106, 103.5], [-2, 39.815, 41.296, 42.857, 102.8], [-1.5, 39.619, 41.077, 42.616, 102], [-1, 39.43, 40.864, 42.383, 101.3], [-0.5, 39.246, 40.662, 42.157, 100.6], [0, 39.068, 40.465, 41.938, 99.8], [0.5, 38.895, 40.276, 41.726, 99.1], [1, 38.728, 40.089, 41.52, 98.4], [1.5, 38.565, 39.909, 41.322, 97.8], [2, 38.408, 39.739, 41.129, 97.1], [2.5, 38.256, 39.569, 40.943, 96.4], [3, 38.109, 39.409, 40.763, 95.7], [3.5, 37.967, 39.247, 40.588, 95.1], [4, 37.829, 39.096, 40.419, 94.4], [4.5, 37.696, 38.948, 40.256, 93.8], [5, 37.568, 38.804, 40.099, 93.2], [5.5, 37.444, 38.669, 39.947, 92.5], [6, 37.324, 38.538, 39.799, 91.9], [6.5, 37.209, 38.41, 39.658, 91.3], [7, 37.098, 38.286, 39.521, 90.7], [7.5, 36.99, 38.169, 39.388, 90.1], [8, 36.887, 38.052, 39.261, 89.5], [8.5, 36.788, 37.944, 39.139, 89], [9, 36.693, 37.835, 39.02, 88.4], [9.5, 36.602, 37.735, 38.907, 87.8], [10, 36.514, 37.638, 38.798, 87.3], [10.5, 36.43, 37.54, 38.693, 86.7], [11, 36.35, 37.454, 38.592, 86.2], [11.5, 36.273, 37.368, 38.496, 85.7], [12, 36.2, 37.286, 38.403, 85.1]];
+var SPOTS  = {"Milan": [{"name": "Parco Monte Stella (Montestella)", "lat": 45.4879, "lon": 9.1348, "tz": 2, "transport": "M1 → QT8, 300 m walk", "elev": "182 m — ~55 m above the plain", "why": "The only easy high ground inside Milan, built from WWII rubble. Its western slope looks straight out over the Ticino plain, which is exactly the bearing the sun will be on. At 1.9° altitude this is as good as it gets without leaving the city — but the summit gets busy, and the treeline on the west side has grown; walk down until the horizon opens."}, {"name": "Parco delle Cave", "lat": 45.4626, "lon": 9.1006, "tz": 2, "transport": "M1 → Bisceglie, then bus 63 or 15 min walk", "elev": "flat, 120 m", "why": "Milan's western edge — past this there is nothing but farmland between you and Piedmont. Flat and wide, with four lakes for a foreground reflection. The lowest true horizon reachable on a metro ticket."}, {"name": "Arco della Pace / Parco Sempione", "lat": 45.4756, "lon": 9.1725, "tz": 2, "transport": "M2 Lanza · M5 Monumentale · tram 1", "elev": "central", "why": "Corso Sempione runs almost exactly WNW from the arch, so the street itself lines up with the sun's bearing and gives you a landmark in frame. Be honest about the trade: the buildings cut the horizon off around 4–5°, so you will lose the sun well before it actually sets. A composition spot, not a maximum-eclipse spot."}, {"name": "Vigevano — Ticino plain", "lat": 45.3167, "lon": 8.85, "tz": 2, "transport": "Train from Milano Porta Genova, ~35 min", "elev": "flat rice country", "why": "If you want the sun all the way to the horizon rather than into a roofline, leave the city westward. Flat paddy fields, a genuinely low skyline, and a Renaissance piazza to shoot from. Coverage is essentially identical to Milan (92.6%); the difference is that here you can actually watch it end."}], "Barcelona": [{"name": "Tibidabo — Mirador", "lat": 41.4225, "lon": 2.1187, "tz": 2, "transport": "FGC L7 → Av. Tibidabo, Tramvia Blau + Funicular", "elev": "512 m", "why": "Barcelona has a specific problem: the Collserola ridge sits directly along its western skyline, which is precisely where a 3.9° sun will be. From the city you will lose the sun into the ridge before maximum. The fix is to be on top of the ridge rather than under it. Even here the eclipse stays partial — 99.8%, no corona."}, {"name": "Turó de la Rovira (Bunkers del Carmel)", "lat": 41.4194, "lon": 2.162, "tz": 2, "transport": "Bus V17 / 119, or M4 Alfons X + bus", "elev": "262 m", "why": "Famous 360° viewpoint, and good for the light and the crowd — but be clear-eyed: Collserola rises to 512 m about 4 km to your west, subtending roughly 3.5°. That is taller than the sun will be at maximum. Wonderful for the bronze twilight, unreliable for the sun itself."}, {"name": "Go to Tarragona instead", "lat": 41.1189, "lon": 1.2445, "tz": 2, "transport": "Rodalies R16/R17 from Sants, ~1h10", "elev": "coastal", "why": "Barcelona misses totality by roughly 30 km of latitude. Tarragona gets a full minute of it. There is no comparison between 99.8% and 100% — the corona, the temperature drop, the 360° sunset horizon and the stars all live in that last fraction. This is the single best decision available to anyone in Barcelona."}], "Madrid": [{"name": "Tres Cantos — open ground north of town", "lat": 40.6058, "lon": -3.7089, "tz": 2, "transport": "Cercanías C-4 from Chamartín, ~25 min", "elev": "710 m", "why": "Madrid sits about 15 km south of the umbra's edge. Tres Cantos is inside it. Thirty-three seconds is short, but it is thirty-three seconds of actual totality instead of none, on a commuter ticket. Walk north out of the residential grid for a clean western skyline."}, {"name": "Colmenar Viejo", "lat": 40.659, "lon": -3.766, "tz": 2, "transport": "Cercanías C-4, ~35 min from Chamartín", "elev": "880 m", "why": "Further into the path than Tres Cantos, so noticeably longer totality (39 s), higher ground, and open dehesa west of town. The better of the two if you are willing to add ten minutes to the journey."}, {"name": "Cerro Garabitas, Casa de Campo", "lat": 40.418, "lon": -3.748, "tz": 2, "transport": "Teleférico from Argüelles, or M10 Lago + climb", "elev": "671 m — highest point in the park", "why": "If you are staying in Madrid: the city's high western viewpoint, above the rooftops with open ground toward the Guadarrama. You get 99.9% — a beautiful, eerie, deeply-bitten sunset, and no corona at all. Worth knowing what you are choosing."}], "Zaragoza": [{"name": "Parque del Agua Luis Buñuel", "lat": 41.669, "lon": -0.899, "tz": 2, "transport": "Bus 42 / tram to Actur, short walk", "elev": "river level, flat", "why": "Zaragoza has the best clear-sky odds of anywhere on this eclipse — clear in 18 of the last 21 Augusts. The Ebro meander gives you a wide flat western horizon and water for a foreground, which matters because the sun is only 6° up. Arrive early; this will be busy."}, {"name": "Anywhere on the Monegros plain, west of the city", "lat": 41.7, "lon": -0.6, "tz": 2, "transport": "Regional bus toward Villamayor / hire a car", "elev": "~300 m, treeless", "why": "If you can move at all, the semi-desert east and north of Zaragoza has the flattest, emptiest horizon in Spain and the driest air. This is the percentage play for the whole eclipse: the best odds of a clear sky anywhere on the track. You give up some totality by sitting off the centre line — check the figure above against the city itself and decide whether the trade is worth it to you."}], "Gijón / Oviedo": [{"name": "Cerro de Santa Catalina, Gijón", "lat": 43.546, "lon": -5.662, "tz": 2, "transport": "City bus 1 / 10, or walk from Gijón station", "elev": "headland, ~50 m", "why": "A headland with open water from west round to north-east — one of the few places on this eclipse where the WNW horizon is genuine open sea. 1m45s of totality with the sun a comfortable 10° up: the best combination of duration and altitude anywhere accessible. The catch is Asturian weather — roughly 60% cloud in August."}, {"name": "Cabo Peñas", "lat": 43.656, "lon": -5.846, "tz": 2, "transport": "Bus from Gijón to Luanco + taxi; car is easier", "elev": "100 m clifftop", "why": "The northernmost point of Asturias, and about as clean a marine horizon as Europe offers. Same 1m45s. Go here if the forecast is marginal — being on the coast lets you watch the cloud and move along the shore at short notice."}], "Mallorca": [{"name": "Port de Sóller", "lat": 39.796, "lon": 2.694, "tz": 2, "transport": "Ferrocarril de Sóller from Palma + vintage tram", "elev": "sea level, north-west facing bay", "why": "This is the one to think about. Palma itself looks WNW straight into the Serra de Tramuntana — mountains, at the exact bearing of a 2.6° sun. Port de Sóller is on the far side of the range, facing open sea to the north-west. Totally eclipsed sun, 94 seconds, sitting just above the Mediterranean. And the train there is itself worth the trip."}, {"name": "Sant Elm / Sa Dragonera", "lat": 39.58, "lon": 2.34, "tz": 2, "transport": "Bus 100 from Palma via Andratx, ~1h20", "elev": "sea level, west facing", "why": "Mallorca's western tip, looking out past the island of Sa Dragonera. 97 seconds, open water on the right bearing, and a dramatic silhouette in frame. Same warning as everywhere in the Balearics: at under 3° altitude a single haze bank on the sea horizon ends your eclipse."}], "Iceland": [{"name": "Grótta lighthouse, Seltjarnarnes", "lat": 64.163, "lon": -22.023, "tz": 0, "transport": "Bus 11 from central Reykjavík", "elev": "sea level", "why": "The good news about Iceland: the sun is 25° up, so for once the horizon is a non-issue — no hills, no buildings, no sunset problem. Grótta gives you open sea and a lighthouse to compose with. You get 65 seconds here, a touch more than central Reykjavík."}, {"name": "Ólafsvík, Snæfellsnes", "lat": 64.8945, "lon": -23.7108, "tz": 0, "transport": "Coach from Reykjavík (~2h30) — check summer schedules", "elev": "coastal", "why": "Two minutes and three seconds — more than double Reykjavík, and near the maximum available on land anywhere. Eclipsophile notes the western peninsulas often stay clear along the coast while cloud builds inland, so the shoreline is the place to stand. Iceland's 70–80% August cloud is the real risk; the trip is a weather bet, not a horizon one."}]};
+var ESCAPE = [{"from": "Madrid", "to": "Colmenar Viejo", "lat": 40.659, "lon": -3.766, "tz": 2, "how": "Cercanías C-4 from Chamartín · ~35 min"}, {"from": "Madrid", "to": "Tres Cantos", "lat": 40.6058, "lon": -3.7089, "tz": 2, "how": "Cercanías C-4 from Chamartín · ~25 min"}, {"from": "Barcelona", "to": "Tarragona", "lat": 41.1189, "lon": 1.2445, "tz": 2, "how": "Rodalies R16/R17 from Sants · ~1h10"}, {"from": "Barcelona", "to": "Reus", "lat": 41.155, "lon": 1.107, "tz": 2, "how": "Rodalies R15 from Sants · ~1h40"}, {"from": "San Sebastián", "to": "Bilbao", "lat": 43.263, "lon": -2.935, "tz": 2, "how": "Renfe / Euskotren · ~1h"}];
+
+/* ================= eclipse engine (NASA Besselian elements) ================= */
+var BE={t0:Date.UTC(2026,7,12,18,0,0),dT:69.2,
+ x:[0.4755140,0.5189249,-0.0000773,-0.0000080],
+ y:[0.7711830,-0.2301680,-0.0001246,0.0000038],
+ d:[14.7966700,-0.0120650,-0.0000030,0],
+ l1:[0.5379550,0.0000939,-0.0000121,0],
+ l2:[-0.0081420,0.0000935,-0.0000121,0],
+ mu:[88.747787,15.003090,0,0],tf1:0.0046141,tf2:0.0045911};
+var RAD=Math.PI/180,DEG=180/Math.PI;
+function pol(c,t){return c[0]+t*(c[1]+t*(c[2]+t*c[3]));}
+function dpol(c,t){return c[1]+t*(2*c[2]+t*3*c[3]);}
+function obs_(lat,lon,h){var L=lat*RAD,u=Math.atan(0.99664719*Math.tan(L)),hh=(h||0)/6378140;
+ return{rs:0.99664719*Math.sin(u)+hh*Math.sin(L),rc:Math.cos(u)+hh*Math.cos(L),lon:lon};}
+function shd(t,o){
+ var x=pol(BE.x,t),y=pol(BE.y,t),d=pol(BE.d,t)*RAD,mu=pol(BE.mu,t),
+     l1=pol(BE.l1,t),l2=pol(BE.l2,t),dx=dpol(BE.x,t),dy=dpol(BE.y,t),
+     dd=dpol(BE.d,t)*RAD,dmu=dpol(BE.mu,t)*RAD;
+ var H=(mu+o.lon-0.00417807*BE.dT)*RAD;
+ var xi=o.rc*Math.sin(H),eta=o.rs*Math.cos(d)-o.rc*Math.cos(H)*Math.sin(d),
+     zet=o.rs*Math.sin(d)+o.rc*Math.cos(H)*Math.cos(d);
+ var dxi=dmu*o.rc*Math.cos(H),deta=dmu*xi*Math.sin(d)-zet*dd;
+ var u=x-xi,v=y-eta,up=dx-dxi,vp=dy-deta,n=Math.sqrt(up*up+vp*vp);
+ return{u:u,v:v,up:up,vp:vp,n:n,L1:l1-zet*BE.tf1,L2:l2-zet*BE.tf2,m:Math.sqrt(u*u+v*v)};
+}
+function tMax(o){var t=0;for(var i=0;i<60;i++){var s=shd(t,o);
+ var dt=-(s.u*s.up+s.v*s.vp)/(s.n*s.n);t+=dt;if(Math.abs(dt)<1e-9)break;}return t;}
+function tCon(o,w,tm){var inr=(w==2||w==3),sg=(w==1||w==2)?-1:1,t=tm;
+ for(var i=0;i<80;i++){var s=shd(t,o),L=inr?Math.abs(s.L2):s.L1;
+  var D=(s.u*s.vp-s.v*s.up)/(s.n*L),q=1-D*D;if(q<0)return null;
+  var ta=-(s.u*s.up+s.v*s.vp)/(s.n*s.n)+sg*(L/s.n)*Math.sqrt(q);t+=ta;
+  if(Math.abs(ta)<1e-9)break;}return t;}
+function obsc(u,v,L1,L2){var m=Math.sqrt(u*u+v*v),rS=(L1+L2)/2,rM=(L1-L2)/2;
+ if(m>=rS+rM)return 0;if(m<=Math.abs(rM-rS))return rM>=rS?1:(rM*rM)/(rS*rS);
+ var a1=Math.acos((rS*rS+m*m-rM*rM)/(2*rS*m)),a2=Math.acos((rM*rM+m*m-rS*rS)/(2*rM*m));
+ return (rS*rS*(a1-Math.sin(2*a1)/2)+rM*rM*(a2-Math.sin(2*a2)/2))/(Math.PI*rS*rS);}
+function toU(t){return t==null||!isFinite(t)?null:new Date(BE.t0+t*3600000-BE.dT*1000);}
+function circ(lat,lon,h){
+ var o=obs_(lat,lon,h),tm=tMax(o),s=shd(tm,o);
+ var mag=(s.L1-s.m)/(s.L1+s.L2),tot=(s.m<Math.abs(s.L2))&&(s.L2<0);
+ var r={mag:mag>0?mag:0,obsc:obsc(s.u,s.v,s.L1,s.L2),total:tot,
+  C1:toU(tCon(o,1,tm)),C2:tot?toU(tCon(o,2,tm)):null,MAX:toU(tm),
+  C3:tot?toU(tCon(o,3,tm)):null,C4:toU(tCon(o,4,tm))};
+ if(r.C2&&r.C3)r.totSec=(r.C3-r.C2)/1000;
+ return r;}
+function obscAt(dt,lat,lon){var o=obs_(lat,lon,0);
+ var t=(dt.getTime()-(BE.t0-BE.dT*1000))/3600000;var s=shd(t,o);
+ return obsc(s.u,s.v,s.L1,s.L2);}
+
+/* ---- sun position ---- */
+function sunAA(date,lat,lon){
+ var jd=date.getTime()/86400000+2440587.5,T=(jd-2451545)/36525;
+ var L0=(280.46646+T*(36000.76983+T*0.0003032))%360;if(L0<0)L0+=360;
+ var M=357.52911+T*(35999.05029-0.0001537*T),e=0.016708634-T*(0.000042037+0.0000001267*T),Mr=M*RAD;
+ var C=Math.sin(Mr)*(1.914602-T*(0.004817+0.000014*T))+Math.sin(2*Mr)*(0.019993-0.000101*T)+Math.sin(3*Mr)*0.000289;
+ var om=125.04-1934.136*T,ap=(L0+C)-0.00569-0.00478*Math.sin(om*RAD);
+ var sec=21.448-T*(46.8150+T*(0.00059-T*0.001813));
+ var eps=(23+(26+sec/60)/60)+0.00256*Math.cos(om*RAD),eR=eps*RAD,aR=ap*RAD;
+ var dec=Math.asin(Math.sin(eR)*Math.sin(aR));
+ var y=Math.pow(Math.tan(eR/2),2),L0r=L0*RAD;
+ var Eq=4*DEG*(y*Math.sin(2*L0r)-2*e*Math.sin(Mr)+4*e*y*Math.sin(Mr)*Math.cos(2*L0r)-0.5*y*y*Math.sin(4*L0r)-1.25*e*e*Math.sin(2*Mr));
+ var um=date.getUTCHours()*60+date.getUTCMinutes()+date.getUTCSeconds()/60;
+ var tst=(um+Eq+4*lon)%1440;if(tst<0)tst+=1440;
+ var ha=tst/4-180;if(ha<-180)ha+=360;
+ var hR=ha*RAD,lR=lat*RAD;
+ var alt=Math.asin(Math.sin(lR)*Math.sin(dec)+Math.cos(lR)*Math.cos(dec)*Math.cos(hR))*DEG;
+ var az=(Math.atan2(-Math.sin(hR),Math.tan(dec)*Math.cos(lR)-Math.sin(lR)*Math.cos(hR))*DEG+360)%360;
+ var ta=Math.tan(alt*RAD),R;
+ if(alt>85)R=0;else if(alt>5)R=58.1/ta-0.07/(ta*ta*ta)+0.000086/Math.pow(ta,5);
+ else if(alt>-0.575)R=1735+alt*(-518.2+alt*(103.4+alt*(-12.79+alt*0.711)));else R=-20.772/ta;
+ return{alt:alt+R/3600,az:az};}
+function sunsetU(lat,lon){var lo=Date.UTC(2026,7,12,8),hi=Date.UTC(2026,7,12,23,59);
+ if(sunAA(new Date(lo),lat,lon).alt<=-0.2665)return new Date(lo);
+ for(var i=0;i<50;i++){var m=(lo+hi)/2;if(sunAA(new Date(m),lat,lon).alt>-0.2665)lo=m;else hi=m;}
+ return new Date((lo+hi)/2);}
+
+/* ---- formatting ---- */
+function tzGuess(lon){return Math.round(lon/15);}
+function fmt(d,tz){if(!d)return"—";var x=new Date(d.getTime()+tz*3600000);
+ var p=function(n){return(n<10?"0":"")+n;};
+ return p(x.getUTCHours())+":"+p(x.getUTCMinutes())+":"+p(x.getUTCSeconds());}
+function dur(s){if(!s)return"—";var m=Math.floor(s/60),ss=Math.round(s%60);
+ return m>0?m+"m "+ss+"s":ss+"s";}
+function card8(az){var d=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+ return d[Math.round(az/22.5)%16];}
+
+/* ================= result rendering ================= */
+function analyse(lat,lon,tz,name){
+ var r=circ(lat,lon,0);
+ if(!r.C1)return{none:true,name:name,reason:"No part of this eclipse reaches the horizon here."};
+ var ss=sunsetU(lat,lon);
+ var start=r.C1.getTime(),end=Math.min(r.C4.getTime(),ss.getTime());
+ var best=null;
+ if(end>start){for(var t=start;t<=end;t+=10000){var d=new Date(t),o=obscAt(d,lat,lon);
+   if(!best||o>best.o)best={t:d,o:o};}}
+ var totVis=r.C2?(sunAA(r.C2,lat,lon).alt>-0.2665&&sunAA(r.C3,lat,lon).alt>-0.2665):false;
+ return{name:name,lat:lat,lon:lon,tz:tz,r:r,sunset:ss,best:best,totVis:totVis,
+  setsDuring:(ss>r.C1&&ss<r.C4),setsBefore:(ss<=r.C1),
+  aMax:best?sunAA(best.t,lat,lon):null,
+  aC1:sunAA(r.C1,lat,lon)};
+}
+function render(a){
+ var el=document.getElementById("result");
+ if(a.none){el.innerHTML='<div class="verdict none"><span class="vtag t-none">Not visible</span>'+
+  '<div class="big">Nothing to see</div><p>'+a.reason+'</p></div>';return;}
+ var r=a.r,tz=a.tz,vis=a.best?a.best.o*100:0;
+ var kind,tag,head,lead;
+ if(a.totVis){kind="total";tag="t-total";head=dur(r.totSec)+" of totality";
+   lead="You are inside the path and the sun is still up when it happens. This is the real thing — "+
+        "the corona, the horizon glowing 360°, stars at 8pm. Nothing else on this page matters as much as being here.";}
+ else if(r.total&&!a.totVis){kind="none";tag="t-none";head="Totality — below the horizon";
+   lead="Technically you are inside the path of totality, but the sun sets before it begins. You will see "+
+        vis.toFixed(1)+"% at best. Being 'in the path' is worthless here — travel west or north-west.";}
+ else if(vis>=99){kind="near";tag="t-near";head=(vis>=99.5?vis.toFixed(2):vis.toFixed(1))+"% covered";
+   lead="A near miss, and near misses are cruel. Even at this coverage there is no corona and no real "+
+        "darkness — that last fraction of a percent holds essentially the entire experience. "+
+        "See the train options below; you are closer than you think.";}
+ else if(vis>0){kind="part";tag="t-part";head=vis.toFixed(1)+"% covered";
+   lead="A deep partial eclipse at sunset. Expect an odd bronze light and a visibly bitten sun, "+
+        "but not darkness. Worth photographing against a landmark — the sun will be low and huge.";}
+ else{kind="none";tag="t-none";head="Sun already set";
+   lead="The sun sets here at "+fmt(a.sunset,tz)+", before the eclipse even begins ("+fmt(r.C1,tz)+
+        "). The whole event happens below your horizon — there is nothing to see from this location.";}
+
+ var lost="";
+ if(a.setsDuring&&a.best){
+   var oSet=obscAt(a.sunset,a.lat,a.lon)*100;
+   lost='<div class="warn"><b>The sun sets during the eclipse here.</b> Sunset is '+fmt(a.sunset,tz)+
+    ' local, but the eclipse does not geometrically finish until '+fmt(r.C4,tz)+
+    '. You lose the last '+Math.round((r.C4-a.sunset)/60000)+' minutes. The sun will still be '+
+    oSet.toFixed(0)+'% covered as it touches the horizon — which is the shot, if you have a clean skyline.</div>';
+ }
+ var horizon="";
+ if(a.aMax&&a.aMax.alt<12){
+  horizon='<div class="note"><strong>Horizon requirement:</strong> at maximum the sun is only <strong>'+
+   a.aMax.alt.toFixed(1)+'° above the horizon</strong>, bearing <strong>'+a.aMax.az.toFixed(0)+'° ('+
+   card8(a.aMax.az)+')</strong>. As a rule of thumb, that is about '+
+   (a.aMax.alt<2?'a fist-width at arm\u2019s length above the skyline — brutally tight':
+    a.aMax.alt<5?'half a fist at arm\u2019s length above the skyline':'one fist at arm\u2019s length above the skyline')+
+   '. A four-storey building 200 m away subtends roughly 4°. Check your sightline before the day.</div>';
+ }
+ el.innerHTML=
+ '<div class="verdict '+kind+'"><span class="vtag '+tag+'">'+
+   (a.totVis?"Total eclipse":r.total?"In path, but sun sets first":vis>=99?"Near miss":vis>0?"Partial eclipse":"Not visible")+
+   '</span><div class="big">'+head+'</div><p>'+lead+'</p>'+
+ '<div class="stats">'+
+   '<div class="stat"><span>First contact</span><b>'+fmt(r.C1,tz)+'</b></div>'+
+   (a.totVis?'<div class="stat"><span>Totality begins</span><b style="color:var(--grn)">'+fmt(r.C2,tz)+'</b></div>':'')+
+   '<div class="stat"><span>Maximum</span><b style="color:var(--gold)">'+fmt(a.best?a.best.t:r.MAX,tz)+'</b></div>'+
+   (a.totVis?'<div class="stat"><span>Totality ends</span><b style="color:var(--grn)">'+fmt(r.C3,tz)+'</b></div>':'')+
+   '<div class="stat"><span>Last contact</span><b>'+fmt(r.C4,tz)+'</b></div>'+
+   '<div class="stat"><span>Sunset</span><b>'+fmt(a.sunset,tz)+'</b></div>'+
+   '<div class="stat"><span>Sun altitude</span><b>'+(a.aMax?a.aMax.alt.toFixed(1)+'°':'—')+'</b></div>'+
+   '<div class="stat"><span>Bearing</span><b>'+(a.aMax?a.aMax.az.toFixed(0)+'° '+card8(a.aMax.az):'—')+'</b></div>'+
+ '</div>'+
+ '<p style="font-size:13px;color:var(--dim2);margin-top:14px">Times are local ('+
+   (tz>=0?'UTC+':'UTC')+tz+') on 12 Aug 2026. '+a.lat.toFixed(4)+'°, '+a.lon.toFixed(4)+'°, sea level.</p>'+
+ '</div>'+lost+horizon+compass(a)+links(a);
+}
+function compass(a){
+ if(!a.aMax)return"";
+ var az=a.aMax.az,alt=a.aMax.alt,R=64,cx=80,cy=80;
+ var rad=(az-90)*Math.PI/180;
+ var x=cx+R*Math.cos(rad),y=cy+R*Math.sin(rad);
+ return '<div class="card" style="margin-top:16px"><div class="compass">'+
+ '<svg width="160" height="160" viewBox="0 0 160 160">'+
+ '<circle cx="80" cy="80" r="64" fill="none" stroke="#33405e" stroke-width="1"/>'+
+ '<circle cx="80" cy="80" r="42" fill="none" stroke="#252e45" stroke-width="1"/>'+
+ '<text x="80" y="12" fill="#6b7691" font-size="11" text-anchor="middle" font-family="monospace">N</text>'+
+ '<text x="152" y="84" fill="#6b7691" font-size="11" text-anchor="middle" font-family="monospace">E</text>'+
+ '<text x="80" y="156" fill="#6b7691" font-size="11" text-anchor="middle" font-family="monospace">S</text>'+
+ '<text x="8" y="84" fill="#6b7691" font-size="11" text-anchor="middle" font-family="monospace">W</text>'+
+ '<line x1="80" y1="80" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="#f5c451" stroke-width="2.5"/>'+
+ '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="7" fill="#f5c451"/>'+
+ '<circle cx="80" cy="80" r="3" fill="#6b7691"/></svg>'+
+ '<div><div style="font:700 15px/1.3 var(--mono);color:var(--gold)">Point everything at '+az.toFixed(0)+'° — '+card8(az)+'</div>'+
+ '<p style="color:var(--dim);margin:8px 0 0;font-size:14.5px">Altitude '+alt.toFixed(1)+
+ '° above the true horizon at maximum. Set your mount up on this bearing the evening <em>before</em>, '+
+ 'at the same time of day, and you will know immediately whether anything is in the way.</p></div>'+
+ '</div></div>';
+}
+function links(a){
+ var az=a.aMax?a.aMax.az.toFixed(0):270,ll=a.lat.toFixed(5)+","+a.lon.toFixed(5);
+ return '<div class="card" style="margin-top:16px"><h3 style="font-size:16px">Check this exact horizon</h3>'+
+ '<p style="color:var(--dim);font-size:14.5px;margin:8px 0 14px">Both links are aimed at '+az+'° — '+
+ 'the bearing of the eclipsed sun from this spot.</p><div class="links">'+
+ '<a target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+ll+'&heading='+az+'&pitch=5&fov=80">Street View, aimed at the sun</a>'+
+ '<a target="_blank" rel="noopener" href="https://earth.google.com/web/@'+a.lat.toFixed(5)+','+a.lon.toFixed(5)+',0a,2200d,35y,'+az+'h,85t,0r">Google Earth 3D horizon</a>'+
+ '<a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+ll+'&travelmode=transit">Public transport here</a>'+
+ '</div></div>';
+}
+
+/* ================= UI wiring ================= */
+var sel=document.getElementById("city");
+CITIES.slice().sort(function(a,b){return a.n.localeCompare(b.n);}).forEach(function(c,i){
+ var o=document.createElement("option");
+ o.value=c.n;o.textContent=c.n+" ("+c.cc+")"+(c.tot&&c.totVisible?"  — TOTAL":"");
+ sel.appendChild(o);});
+function byName(n){for(var i=0;i<CITIES.length;i++)if(CITIES[i].n===n)return CITIES[i];return null;}
+function pick(n){var c=byName(n);if(!c)return;sel.value=n;
+ render(analyse(c.lat,c.lon,c.tz,c.n));
+ if(window._mk)window._mk.setLatLng([c.lat,c.lon]);
+ if(window._map)window._map.setView([c.lat,c.lon],7);}
+sel.addEventListener("change",function(){pick(this.value);});
+document.getElementById("geo").addEventListener("click",function(){
+ var b=this;b.textContent="Locating…";
+ if(!navigator.geolocation){b.textContent="Not supported";return;}
+ navigator.geolocation.getCurrentPosition(function(p){
+  b.textContent="Use my location";
+  var la=p.coords.latitude,lo=p.coords.longitude;
+  render(analyse(la,lo,tzGuess(lo),"Your location"));
+  if(window._map){window._map.setView([la,lo],8);window._mk.setLatLng([la,lo]);}
+ },function(){b.textContent="Location denied";});
+});
+pick("Milan");
+
+/* ---- map ---- */
+if(window.L){
+ var map=L.map("map",{scrollWheelZoom:false}).setView([44.5,-6],4);
+ window._map=map;
+ L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+  attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:18}).addTo(map);
+ var north=[],south=[],centre=[];
+ PATH.forEach(function(p){north.push([p[3],p[0]]);south.push([p[1],p[0]]);centre.push([p[2],p[0]]);});
+ L.polygon(north.concat(south.slice().reverse()),
+  {color:"#f5c451",weight:1,fillColor:"#f5c451",fillOpacity:.17}).addTo(map);
+ L.polyline(centre,{color:"#e0913a",weight:2,dashArray:"6 5"}).addTo(map);
+ CITIES.forEach(function(c){
+  var col=(c.tot&&c.totVisible)?"#5fd6a0":(c.visObs>=99?"#ff6b6b":"#6fb3ff");
+  L.circleMarker([c.lat,c.lon],{radius:4.5,color:col,weight:1.5,fillColor:col,fillOpacity:.55})
+   .addTo(map)
+   .bindPopup("<strong>"+c.n+"</strong><br>"+
+     ((c.tot&&c.totVisible)?"<span style='color:#5fd6a0'>Totality "+dur(c.tot)+"</span>":
+      c.visObs>0?c.visObs.toFixed(1)+"% covered":"not visible")+
+     "<br>Sun "+(c.visAlt==null?"—":c.visAlt.toFixed(1)+"° at "+c.visAz.toFixed(0)+"°")+
+     "<br><a href='#you' onclick=\"pick('"+c.n.replace(/'/g,"\\'")+"')\">details ↑</a>");
+ });
+ var mk=L.marker([45.4642,9.19],{draggable:true}).addTo(map);window._mk=mk;
+ function fromPt(la,lo){render(analyse(la,lo,tzGuess(lo),"Selected point"));
+  document.getElementById("you").scrollIntoView({behavior:"smooth"});}
+ map.on("click",function(e){mk.setLatLng(e.latlng);fromPt(e.latlng.lat,e.latlng.lng);});
+ mk.on("dragend",function(){var p=mk.getLatLng();fromPt(p.lat,p.lng);});
+}else{document.getElementById("map").style.display="none";
+ document.getElementById("map-fallback").style.display="block";}
+
+
+/* ================= Europe-wide spot directory ================= */
+var EUROPE = {"Reykjavík": {"city": "Reykjavík", "cc": "IS", "lat": 64.1466, "lon": -21.9426, "tz": 0, "visible": true, "az": 252.65, "alt": 24.58, "obsc": 100.0, "tot_vis": true, "tot_s": 59, "when": "2026-08-12T17:48:24.550549Z", "sunset": "2026-08-12T21:52:39.774590Z", "c1": "2026-08-12T16:47:14.550549Z", "c4": "2026-08-12T18:47:39.787611Z", "need15": 33, "spots": [{"name": "Fjaran við Kasthúsatjörn", "lat": 64.11268, "lon": -22.02119, "fetch": 385.0193, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.0, "clearance": 24.57535, "elev": 0.0, "prominence": 0.0, "area": 174401.69238, "stop_d": 251.06257, "rail_d": 5189.73886, "kind": "nature_reserve", "stop_name": "", "stop_kind": "interchange", "stop_lat": 64.15277, "stop_lon": -21.94696, "stop_d_used": 251}, {"name": "Garðahraun - efra", "lat": 64.08192, "lon": -21.89861, "fetch": 1001.42741, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 0.6258, "bldg_h": 12.0, "bldg_d": 946.63107, "bldg_measured": false, "horizon": 0.6258, "clearance": 23.94956, "elev": 0.0, "prominence": 0.0, "area": 573215.89062, "stop_d": 152.9394, "rail_d": 8037.48752, "kind": "nature_reserve", "stop_name": "Gamla höfnin", "stop_kind": "interchange", "stop_lat": 64.15167, "stop_lon": -21.9421, "stop_d_used": 153}, {"name": "Varmárósar", "lat": 64.17748, "lon": -21.69549, "fetch": 610.72683, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 0.78204, "bldg_h": 12.0, "bldg_d": 759.06665, "bldg_measured": false, "horizon": 0.78204, "clearance": 23.79332, "elev": 0.0, "prominence": 0.0, "area": 287377.03516, "stop_d": 380.92377, "rail_d": 7958.38437, "kind": "nature_reserve", "stop_name": "Viðey", "stop_kind": "interchange", "stop_lat": 64.16106, "stop_lon": -21.85537, "stop_d_used": 381}, {"name": "Urriðavatn", "lat": 64.0682, "lon": -21.90966, "fetch": 383.46756, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 0.89504, "bldg_h": 12.0, "bldg_d": 663.80539, "bldg_measured": false, "horizon": 0.89504, "clearance": 23.68032, "elev": 0.0, "prominence": 0.0, "area": 129417.92432, "stop_d": 279.84609, "rail_d": 9414.3894, "kind": "water", "stop_name": "Gamla höfnin", "stop_kind": "interchange", "stop_lat": 64.15167, "stop_lon": -21.9421, "stop_d_used": 280}, {"name": "Elliðaárdalur", "lat": 64.10162, "lon": -21.79955, "fetch": 654.7122, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 1.16033, "bldg_h": 27.1, "bldg_d": 1253.76755, "bldg_measured": true, "horizon": 1.16033, "clearance": 23.41502, "elev": 0.0, "prominence": 0.0, "area": 1117031.54102, "stop_d": 65.84904, "rail_d": 5981.56875, "kind": "common", "stop_name": "Skarfabakki", "stop_kind": "interchange", "stop_lat": 64.15643, "stop_lon": -21.86668, "stop_d_used": 66}, {"name": "Fossvogsdalur", "lat": 64.1159, "lon": -21.854, "fetch": 402.84741, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 1.49617, "bldg_h": 12.0, "bldg_d": 397.76967, "bldg_measured": false, "horizon": 1.49617, "clearance": 23.07919, "elev": 0.0, "prominence": 0.0, "area": 370390.90771, "stop_d": 396.0814, "rail_d": 4549.44182, "kind": "park", "stop_name": "Skarfabakki", "stop_kind": "interchange", "stop_lat": 64.15643, "stop_lon": -21.86668, "stop_d_used": 396}]}, "Akureyri": {"city": "Akureyri", "cc": "IS", "lat": 65.6835, "lon": -18.0878, "tz": 0, "visible": true, "az": 255.29, "alt": 22.75, "obsc": 97.88, "tot_vis": false, "tot_s": 0, "when": "2026-08-12T17:46:44.265758Z", "sunset": "2026-08-12T21:48:57.634856Z", "c1": "2026-08-12T16:46:04.265758Z", "c4": "2026-08-12T18:44:53.019890Z", "need15": 36, "spots": [{"name": "Glerárdalur", "lat": 65.57346, "lon": -18.25109, "fetch": 5999.99964, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.0, "clearance": 22.7542, "elev": 0.0, "prominence": 0.0, "area": 115370219.73291, "stop_d": 398.4686, "rail_d": 2163.89582, "kind": "nature_reserve", "stop_name": "Miðbær", "stop_kind": "bus", "stop_lat": 65.68318, "stop_lon": -18.08955, "stop_d_used": 398}, {"name": "Þórssvæðið", "lat": 65.6912, "lon": -18.1153, "fetch": 271.62874, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 2.49453, "bldg_h": 12.0, "bldg_d": 238.63408, "bldg_measured": false, "horizon": 2.49453, "clearance": 20.25967, "elev": 0.0, "prominence": 0.0, "area": 78034.46143, "stop_d": 165.32438, "rail_d": 1478.30122, "kind": "recreation_ground", "stop_name": "Miðbær", "stop_kind": "bus", "stop_lat": 65.68318, "stop_lon": -18.08955, "stop_d_used": 165}, {"name": "Lystigarður Akureyrar", "lat": 65.67521, "lon": -18.09198, "fetch": 239.19153, "terrain": 0.0, "terrain_at": 4757.28707, "bldg": 6.47744, "bldg_h": 12.0, "bldg_d": 91.59525, "bldg_measured": false, "horizon": 6.47744, "clearance": 16.27676, "elev": 0.0, "prominence": 0.0, "area": 29666.40918, "stop_d": 263.25137, "rail_d": 892.9446, "kind": "garden", "stop_name": "Miðbær", "stop_kind": "bus", "stop_lat": 65.68318, "stop_lon": -18.08955, "stop_d_used": 263}]}, "A Coruña": {"city": "A Coruña", "cc": "ES", "lat": 43.3623, "lon": -8.4115, "tz": 2, "visible": true, "az": 279.07, "alt": 12.11, "obsc": 100.0, "tot_vis": true, "tot_s": 75, "when": "2026-08-12T18:27:48.775783Z", "sunset": "2026-08-12T19:40:36.661349Z", "c1": "2026-08-12T17:30:58.775783Z", "c4": "2026-08-12T19:22:01.462758Z", "need15": 70, "spots": [{"name": "Praia de Alba", "lat": 43.32983, "lon": -8.50453, "fetch": 299.20614, "terrain": 0.0, "terrain_at": 9477.95187, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.0, "clearance": 12.11125, "elev": 5.0, "prominence": -2.5, "area": 197524.88818, "stop_d": 62.41271, "rail_d": 6063.10633, "kind": "beach", "stop_name": "Uxes", "stop_kind": "rail", "stop_lat": 43.29751, "stop_lon": -8.44418, "stop_d_used": 62}, {"name": "ENIL Torre de Hércules", "lat": 43.38624, "lon": -8.40666, "fetch": 243.93511, "terrain": 0.0, "terrain_at": 26559.80842, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.0, "clearance": 12.11125, "elev": 44.0, "prominence": 41.75, "area": 395324.52515, "stop_d": 352.9412, "rail_d": 3693.26087, "kind": "nature_reserve", "stop_name": "Estación de Autobuses da Coruña", "stop_kind": "bus", "stop_lat": 43.35338, "stop_lon": -8.4052, "stop_d_used": 353}, {"name": "Parque do Monte de San Pedro", "lat": 43.37685, "lon": -8.43921, "fetch": 50.66979, "terrain": 0.0, "terrain_at": 42479.85026, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.0, "clearance": 12.11125, "elev": 122.0, "prominence": 93.75, "area": 91835.78003, "stop_d": 290.05745, "rail_d": 3382.18018, "kind": "park", "stop_name": "A Coruña", "stop_kind": "rail", "stop_lat": 43.35252, "stop_lon": -8.40995, "stop_d_used": 290}, {"name": "Parque das Galeras", "lat": 43.34505, "lon": -8.34981, "fetch": 334.82265, "terrain": 0.33903, "terrain_at": 3791.16816, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.33903, "clearance": 11.77223, "elev": 43.0, "prominence": 14.75, "area": 60936.55029, "stop_d": 357.657, "rail_d": 3372.59222, "kind": "park", "stop_name": "O Burgo-Santiago", "stop_kind": "rail", "stop_lat": 43.31798, "stop_lon": -8.36862, "stop_d_used": 358}, {"name": "ENIL Brañas de Sada", "lat": 43.34915, "lon": -8.2555, "fetch": 886.45685, "terrain": 1.7289, "terrain_at": 3791.16816, "bldg": 1.51706, "bldg_h": 12.0, "bldg_d": 561.12338, "bldg_measured": false, "horizon": 1.7289, "clearance": 10.38236, "elev": 7.0, "prominence": -29.25, "area": 298744.15259, "stop_d": 215.72195, "rail_d": 8021.07517, "kind": "nature_reserve", "stop_name": "Cecebre", "stop_kind": "rail", "stop_lat": 43.28785, "stop_lon": -8.30777, "stop_d_used": 216}, {"name": "Xardíns da Casa Barrié de la Maza", "lat": 43.35249, "lon": -8.27218, "fetch": 152.72999, "terrain": 2.27375, "terrain_at": 2917.18187, "bldg": 4.0812, "bldg_h": 12.0, "bldg_d": 174.80275, "bldg_measured": false, "horizon": 4.0812, "clearance": 8.03006, "elev": 43.0, "prominence": -0.5, "area": 35646.71802, "stop_d": 410.81212, "rail_d": 7687.4544, "kind": "garden", "stop_name": "Cecebre", "stop_kind": "rail", "stop_lat": 43.28785, "stop_lon": -8.30777, "stop_d_used": 411}]}, "Gijón": {"city": "Gijón", "cc": "ES", "lat": 43.5322, "lon": -5.6611, "tz": 2, "visible": true, "az": 280.71, "alt": 10.35, "obsc": 100.0, "tot_vis": true, "tot_s": 105, "when": "2026-08-12T18:26:54.709868Z", "sunset": "2026-08-12T19:29:59.113065Z", "c1": "2026-08-12T17:31:04.709868Z", "c4": "2026-08-12T19:20:46.373486Z", "need15": 82, "spots": [{"name": "Parque del Cerro", "lat": 43.54831, "lon": -5.66454, "fetch": 50.0, "terrain": 1.09455, "terrain_at": 3791.16816, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 1.09455, "clearance": 9.25237, "elev": 27.0, "prominence": 23.5, "area": 45708.58032, "stop_d": 454.34773, "rail_d": 1091.77746, "kind": "park", "stop_name": "Gijón", "stop_kind": "bus", "stop_lat": 43.5389, "stop_lon": -5.66713, "stop_d_used": 454}, {"name": "Embalse de Tresona / Trasona", "lat": 43.54244, "lon": -5.87081, "fetch": 861.35137, "terrain": 0.87081, "terrain_at": 1464.22685, "bldg": 1.33978, "bldg_h": 12.0, "bldg_d": 1461.91059, "bldg_measured": false, "horizon": 1.33978, "clearance": 9.00714, "elev": 20.0, "prominence": -33.0, "area": 591589.7207, "stop_d": 615.97586, "rail_d": 1084.43939, "kind": "water", "stop_name": "Tresona", "stop_kind": "rail", "stop_lat": 43.55187, "stop_lon": -5.87422, "stop_d_used": 616}, {"name": "Jardines del Tren de la Libertad (El Solarón)", "lat": 43.54051, "lon": -5.66645, "fetch": 238.536, "terrain": 0.95857, "terrain_at": 3791.16816, "bldg": 2.09927, "bldg_h": 34.0, "bldg_d": 723.82589, "bldg_measured": true, "horizon": 2.09927, "clearance": 8.24764, "elev": 10.0, "prominence": -2.75, "area": 30624.46484, "stop_d": 58.516, "rail_d": 187.89844, "kind": "park", "stop_name": "Gijón", "stop_kind": "bus", "stop_lat": 43.5389, "stop_lon": -5.66713, "stop_d_used": 59}, {"name": "Parque Puerto de Vegarada", "lat": 43.53234, "lon": -5.6772, "fetch": 238.90507, "terrain": 1.67214, "terrain_at": 4757.28707, "bldg": 2.16066, "bldg_h": 12.0, "bldg_d": 143.09157, "bldg_measured": false, "horizon": 2.16066, "clearance": 8.18626, "elev": 19.0, "prominence": 0.75, "area": 27161.2522, "stop_d": 73.49515, "rail_d": 1091.2693, "kind": "park", "stop_name": "Gijón", "stop_kind": "bus", "stop_lat": 43.5389, "stop_lon": -5.66713, "stop_d_used": 73}, {"name": "El Payarón", "lat": 43.39274, "lon": -5.69663, "fetch": 474.29824, "terrain": 1.04296, "terrain_at": 897.86804, "bldg": 2.40006, "bldg_h": 12.0, "bldg_d": 249.61862, "bldg_measured": false, "horizon": 2.40006, "clearance": 7.94685, "elev": 192.0, "prominence": -9.0, "area": 99046.08008, "stop_d": 629.62077, "rail_d": 1387.09948, "kind": "meadow", "stop_name": "El Berrón", "stop_kind": "rail", "stop_lat": 43.38248, "stop_lon": -5.70247, "stop_d_used": 630}, {"name": "Parque del Nuevo Roces", "lat": 43.51015, "lon": -5.66358, "fetch": 183.78067, "terrain": 1.31977, "terrain_at": 9477.95187, "bldg": 2.41003, "bldg_h": 23.9, "bldg_d": 572.19575, "bldg_measured": true, "horizon": 2.41003, "clearance": 7.93688, "elev": 33.0, "prominence": -9.75, "area": 39924.29517, "stop_d": 275.67884, "rail_d": 3209.99745, "kind": "park", "stop_name": "Gijón", "stop_kind": "bus", "stop_lat": 43.5389, "stop_lon": -5.66713, "stop_d_used": 276}]}, "Oviedo": {"city": "Oviedo", "cc": "ES", "lat": 43.3619, "lon": -5.8494, "tz": 2, "visible": true, "az": 280.67, "alt": 10.4, "obsc": 100.0, "tot_vis": true, "tot_s": 108, "when": "2026-08-12T18:27:11.710544Z", "sunset": "2026-08-12T19:30:22.324912Z", "c1": "2026-08-12T17:31:21.710544Z", "c4": "2026-08-12T19:21:06.039701Z", "need15": 82, "spots": [{"name": "Parque de La Cebera", "lat": 43.40941, "lon": -5.82031, "fetch": 539.18481, "terrain": 0.81669, "terrain_at": 15456.47128, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.81669, "clearance": 9.58198, "elev": 193.0, "prominence": 32.0, "area": 270336.85864, "stop_d": 854.54612, "rail_d": 854.54612, "kind": "park", "stop_name": "Lugones", "stop_kind": "rail", "stop_lat": 43.40437, "stop_lon": -5.81212, "stop_d_used": 855}, {"name": "Parque Purificación Tomás", "lat": 43.37267, "lon": -5.87016, "fetch": 555.44579, "terrain": 0.51122, "terrain_at": 2139.71232, "bldg": 0.83233, "bldg_h": 12.0, "bldg_d": 2139.57438, "bldg_measured": false, "horizon": 0.83233, "clearance": 9.56633, "elev": 290.0, "prominence": -32.5, "area": 189638.19336, "stop_d": 261.70601, "rail_d": 1294.05824, "kind": "park", "stop_name": "Oviedo / Uviéu", "stop_kind": "rail", "stop_lat": 43.36636, "stop_lon": -5.85487, "stop_d_used": 262}, {"name": "Parque de Invierno", "lat": 43.3493, "lon": -5.84549, "fetch": 611.71603, "terrain": 1.9297, "terrain_at": 2139.71232, "bldg": 2.24468, "bldg_h": 12.0, "bldg_d": 2137.05855, "bldg_measured": false, "horizon": 2.24468, "clearance": 8.15398, "elev": 256.0, "prominence": -20.75, "area": 262790.72607, "stop_d": 21.25706, "rail_d": 1848.57937, "kind": "park", "stop_name": "Oviedo / Uviéu", "stop_kind": "rail", "stop_lat": 43.36636, "stop_lon": -5.85487, "stop_d_used": 21}, {"name": "El Payarón", "lat": 43.39274, "lon": -5.69663, "fetch": 475.02744, "terrain": 1.04296, "terrain_at": 897.86804, "bldg": 2.48152, "bldg_h": 12.0, "bldg_d": 249.61862, "bldg_measured": false, "horizon": 2.48152, "clearance": 7.91715, "elev": 192.0, "prominence": -8.75, "area": 99046.08008, "stop_d": 629.62077, "rail_d": 1387.09948, "kind": "meadow", "stop_name": "El Berrón", "stop_kind": "rail", "stop_lat": 43.38248, "stop_lon": -5.70247, "stop_d_used": 630}, {"name": "Meandros del Nora", "lat": 43.37931, "lon": -5.96113, "fetch": 1011.74891, "terrain": 2.84375, "terrain_at": 450.66868, "bldg": 0.78306, "bldg_h": 12.0, "bldg_d": 2158.72627, "bldg_measured": false, "horizon": 2.84375, "clearance": 7.55491, "elev": 83.0, "prominence": -85.75, "area": 656799.08179, "stop_d": 596.99151, "rail_d": 596.99151, "kind": "nature_reserve", "stop_name": "San Pedru Nora", "stop_kind": "rail", "stop_lat": 43.36874, "stop_lon": -5.95853, "stop_d_used": 597}, {"name": "Santuyano", "lat": 43.36818, "lon": -5.83626, "fetch": 119.52746, "terrain": 1.98319, "terrain_at": 2139.71232, "bldg": 3.27725, "bldg_h": 12.0, "bldg_d": 129.21244, "bldg_measured": false, "horizon": 3.27725, "clearance": 7.12141, "elev": 203.0, "prominence": -2.5, "area": 32660.28809, "stop_d": 185.91526, "rail_d": 1362.88492, "kind": "park", "stop_name": "Estación de Autobuses de Oviedo", "stop_kind": "bus", "stop_lat": 43.36921, "stop_lon": -5.8509, "stop_d_used": 186}]}, "Santander": {"city": "Santander", "cc": "ES", "lat": 43.4623, "lon": -3.81, "tz": 2, "visible": true, "az": 281.98, "alt": 9.0, "obsc": 100.0, "tot_vis": true, "tot_s": 63, "when": "2026-08-12T18:27:03.917757Z", "sunset": "2026-08-12T19:22:26.278165Z", "c1": "2026-08-12T17:31:23.917757Z", "c4": "2026-08-12T19:20:08.715430Z", "need15": 95, "spots": [{"name": "Papion de Guinea", "lat": 43.36511, "lon": -3.8388, "fetch": 50.0, "terrain": 0.14958, "terrain_at": 6951.94585, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.14958, "clearance": 8.85197, "elev": 237.0, "prominence": 94.5, "area": 27831.96289, "stop_d": 263.4432, "rail_d": 3434.16612, "kind": "grassland", "stop_name": "Guarnizo", "stop_kind": "rail", "stop_lat": 43.39154, "stop_lon": -3.85953, "stop_d_used": 263}, {"name": "Playa de El Puntal", "lat": 43.45506, "lon": -3.75037, "fetch": 2000.4251, "terrain": 0.43502, "terrain_at": 5811.90687, "bldg": 0.33208, "bldg_h": 12.0, "bldg_d": 1758.45573, "bldg_measured": false, "horizon": 0.43502, "clearance": 8.56653, "elev": 0.0, "prominence": -8.5, "area": 529401.71326, "stop_d": 209.0452, "rail_d": 501.20811, "kind": "beach", "stop_name": "Embarcadero de Somo", "stop_kind": "interchange", "stop_lat": 43.45184, "stop_lon": -3.74643, "stop_d_used": 209}, {"name": "Parque Natural Dunas de Liencres y Costa Quebrada", "lat": 43.47474, "lon": -3.88139, "fetch": 50.0, "terrain": 0.99072, "terrain_at": 138.70956, "bldg": 0.14971, "bldg_h": 12.0, "bldg_d": 1142.86416, "bldg_measured": false, "horizon": 0.99072, "clearance": 8.01083, "elev": 13.0, "prominence": 13.0, "area": 2492104.48083, "stop_d": 325.44433, "rail_d": 3140.54914, "kind": "nature_reserve", "stop_name": "Adarzo", "stop_kind": "rail", "stop_lat": 43.45346, "stop_lon": -3.8558, "stop_d_used": 325}, {"name": "Pozón de la Dolores", "lat": 43.38697, "lon": -3.88577, "fetch": 50.0, "terrain": 2.33625, "terrain_at": 450.66868, "bldg": 1.38609, "bldg_h": 12.0, "bldg_d": 2271.03009, "bldg_measured": false, "horizon": 2.33625, "clearance": 6.66529, "elev": 119.0, "prominence": 50.25, "area": 181908.03674, "stop_d": 743.69295, "rail_d": 1438.94463, "kind": "water", "stop_name": "Parbayón", "stop_kind": "rail", "stop_lat": 43.37674, "stop_lon": -3.89424, "stop_d_used": 744}, {"name": "Parque de la Antigua Marisma de Cacho", "lat": 43.4073, "lon": -3.82903, "fetch": 521.26443, "terrain": 0.87858, "terrain_at": 5811.90687, "bldg": 2.76211, "bldg_h": 12.0, "bldg_d": 227.26025, "bldg_measured": false, "horizon": 2.76211, "clearance": 6.23944, "elev": 1.0, "prominence": -16.75, "area": 76330.79175, "stop_d": 226.07423, "rail_d": 754.69008, "kind": "park", "stop_name": "Astillero", "stop_kind": "rail", "stop_lat": 43.40396, "stop_lon": -3.8209, "stop_d_used": 226}, {"name": "Playa de Usgo", "lat": 43.43905, "lon": -3.99873, "fetch": 355.18026, "terrain": 4.61597, "terrain_at": 450.66868, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 4.61597, "clearance": 4.38558, "elev": 13.0, "prominence": -1.5, "area": 43874.82617, "stop_d": 292.7584, "rail_d": 3355.95091, "kind": "beach", "stop_name": "Gornazo", "stop_kind": "rail", "stop_lat": 43.4098, "stop_lon": -3.98848, "stop_d_used": 293}]}, "Bilbao": {"city": "Bilbao", "cc": "ES", "lat": 43.263, "lon": -2.935, "tz": 2, "visible": true, "az": 282.66, "alt": 8.27, "obsc": 100.0, "tot_vis": true, "tot_s": 29, "when": "2026-08-12T18:27:29.184224Z", "sunset": "2026-08-12T19:18:30.894188Z", "c1": "2026-08-12T17:31:49.184224Z", "c4": "2026-08-12T19:20:04.503329Z", "need15": 103, "spots": [{"name": "Akarlanda", "lat": 43.32561, "lon": -2.94346, "fetch": 106.32741, "terrain": 0.60645, "terrain_at": 28644.662, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 0.60645, "clearance": 7.66431, "elev": 140.0, "prominence": 50.0, "area": 208977.76758, "stop_d": 158.14227, "rail_d": 2883.32726, "kind": "park", "stop_name": "Zangroiz", "stop_kind": "rail", "stop_lat": 43.30029, "stop_lon": -2.94099, "stop_d_used": 158}, {"name": "Arboretum EHU", "lat": 43.3285, "lon": -2.96853, "fetch": 212.38732, "terrain": 0.93898, "terrain_at": 450.66868, "bldg": 1.88626, "bldg_h": 12.0, "bldg_d": 512.70781, "bldg_measured": false, "horizon": 1.88626, "clearance": 6.3845, "elev": 60.0, "prominence": 24.75, "area": 113006.49084, "stop_d": 210.92925, "rail_d": 2426.4577, "kind": "park", "stop_name": "Astrabudua", "stop_kind": "metro", "stop_lat": 43.31462, "stop_lon": -2.9868, "stop_d_used": 211}, {"name": "Parque Periurbano Arraizmendi", "lat": 43.24893, "lon": -2.96232, "fetch": 50.0, "terrain": 2.00229, "terrain_at": 9477.95187, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 2.00229, "clearance": 6.26847, "elev": 329.0, "prominence": 176.75, "area": 238673.22839, "stop_d": 399.65565, "rail_d": 713.41359, "kind": "park", "stop_name": "Funicular de Masustegi", "stop_kind": "rail", "stop_lat": 43.25495, "stop_lon": -2.95578, "stop_d_used": 400}, {"name": "Artatza parkea", "lat": 43.33033, "lon": -3.00129, "fetch": 157.54974, "terrain": 2.22812, "terrain_at": 5811.90687, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 2.22812, "clearance": 6.04265, "elev": 35.0, "prominence": 24.25, "area": 154809.52344, "stop_d": 148.43756, "rail_d": 794.96831, "kind": "park", "stop_name": "Gobela", "stop_kind": "metro", "stop_lat": 43.33303, "stop_lon": -3.00738, "stop_d_used": 148}, {"name": "Kobetamendi parkea", "lat": 43.2561, "lon": -2.96297, "fetch": 56.13577, "terrain": 2.7584, "terrain_at": 2139.71232, "bldg": 2.00381, "bldg_h": 12.0, "bldg_d": 2387.08036, "bldg_measured": false, "horizon": 2.7584, "clearance": 5.51237, "elev": 202.0, "prominence": 125.5, "area": 123424.0697, "stop_d": 35.02183, "rail_d": 357.19794, "kind": "park", "stop_name": "Funicular de Masustegi", "stop_kind": "rail", "stop_lat": 43.25495, "stop_lon": -2.95578, "stop_d_used": 35}, {"name": "Gallarta Zaharra Parkea", "lat": 43.3088, "lon": -3.07679, "fetch": 50.0, "terrain": 1.6176, "terrain_at": 5811.90687, "bldg": 3.60038, "bldg_h": 12.0, "bldg_d": 170.63959, "bldg_measured": false, "horizon": 3.60038, "clearance": 4.67039, "elev": 179.0, "prominence": 24.25, "area": 37929.28247, "stop_d": 112.39974, "rail_d": 1050.24838, "kind": "park", "stop_name": "Gallarta", "stop_kind": "rail", "stop_lat": 43.31936, "stop_lon": -3.06749, "stop_d_used": 112}]}, "Burgos": {"city": "Burgos", "cc": "ES", "lat": 42.3439, "lon": -3.6969, "tz": 2, "visible": true, "az": 282.47, "alt": 8.42, "obsc": 100.0, "tot_vis": true, "tot_s": 104, "when": "2026-08-12T18:28:33.317845Z", "sunset": "2026-08-12T19:19:37.857829Z", "c1": "2026-08-12T17:33:23.317845Z", "c4": "2026-08-12T19:21:44.605240Z", "need15": 101, "spots": [{"name": "Jardín Europeo", "lat": 42.2481, "lon": -3.66296, "fetch": 169.35754, "terrain": 0.0, "terrain_at": 30793.95648, "bldg": 0.95633, "bldg_h": 12.0, "bldg_d": 83.8411, "bldg_measured": false, "horizon": 0.95633, "clearance": 7.46682, "elev": 902.0, "prominence": 9.0, "area": 25190.24658, "stop_d": 491.83684, "rail_d": 10554.97138, "kind": "village_green", "stop_name": "Estación de Autobuses de Burgos", "stop_kind": "bus", "stop_lat": 42.33797, "stop_lon": -3.70111, "stop_d_used": 492}, {"name": "Parque de Fuentes Blancas", "lat": 42.34258, "lon": -3.66252, "fetch": 309.2773, "terrain": 0.50526, "terrain_at": 3791.16816, "bldg": 1.06804, "bldg_h": 49.5, "bldg_d": 2243.66491, "bldg_measured": true, "horizon": 1.06804, "clearance": 7.3551, "elev": 869.0, "prominence": -13.75, "area": 82980.66296, "stop_d": 269.11566, "rail_d": 3193.71284, "kind": "village_green", "stop_name": "Burgos - Rosa Manzano", "stop_kind": "rail", "stop_lat": 42.37117, "stop_lon": -3.66632, "stop_d_used": 269}, {"name": "Parque del Parral", "lat": 42.34013, "lon": -3.72013, "fetch": 533.19311, "terrain": 0.99072, "terrain_at": 138.70956, "bldg": 1.63531, "bldg_h": 7.9, "bldg_d": 271.2891, "bldg_measured": true, "horizon": 1.63531, "clearance": 6.78784, "elev": 852.0, "prominence": -14.75, "area": 108724.9585, "stop_d": 28.54078, "rail_d": 1488.38531, "kind": "park", "stop_name": "Estación de Autobuses de Burgos", "stop_kind": "bus", "stop_lat": 42.33797, "stop_lon": -3.70111, "stop_d_used": 29}, {"name": "Parque Lineal del Vena", "lat": 42.36405, "lon": -3.66046, "fetch": 253.37863, "terrain": 1.12697, "terrain_at": 2139.71232, "bldg": 2.01587, "bldg_h": 36.7, "bldg_d": 1959.5123, "bldg_measured": true, "horizon": 2.01587, "clearance": 6.40727, "elev": 872.0, "prominence": -8.25, "area": 31426.51306, "stop_d": 304.00904, "rail_d": 926.09824, "kind": "park", "stop_name": "Burgos - Rosa Manzano", "stop_kind": "rail", "stop_lat": 42.37117, "stop_lon": -3.66632, "stop_d_used": 304}, {"name": "Club El Soto", "lat": 42.34068, "lon": -3.62992, "fetch": 264.68575, "terrain": 0.47445, "terrain_at": 5811.90687, "bldg": 2.72806, "bldg_h": 12.0, "bldg_d": 134.28815, "bldg_measured": false, "horizon": 2.72806, "clearance": 5.69508, "elev": 885.0, "prominence": -8.5, "area": 43165.37634, "stop_d": 268.02719, "rail_d": 4521.14946, "kind": "village_green", "stop_name": "Burgos - Rosa Manzano", "stop_kind": "rail", "stop_lat": 42.37117, "stop_lon": -3.66632, "stop_d_used": 268}, {"name": "Las Veguillas", "lat": 42.34126, "lon": -3.67772, "fetch": 187.33978, "terrain": 0.53799, "terrain_at": 2139.71232, "bldg": 3.11806, "bldg_h": 12.0, "bldg_d": 218.61897, "bldg_measured": false, "horizon": 3.11806, "clearance": 5.30509, "elev": 867.0, "prominence": -15.25, "area": 25117.95569, "stop_d": 299.73014, "rail_d": 2185.37232, "kind": "recreation_ground", "stop_name": "Estación de Autobuses de Burgos", "stop_kind": "bus", "stop_lat": 42.33797, "stop_lon": -3.70111, "stop_d_used": 300}]}, "León": {"city": "León", "cc": "ES", "lat": 42.5987, "lon": -5.5671, "tz": 2, "visible": true, "az": 281.19, "alt": 9.83, "obsc": 100.0, "tot_vis": true, "tot_s": 105, "when": "2026-08-12T18:28:25.976433Z", "sunset": "2026-08-12T19:27:37.968036Z", "c1": "2026-08-12T17:32:45.976433Z", "c4": "2026-08-12T19:22:07.863187Z", "need15": 87, "spots": [{"name": "Parque de Quevedo", "lat": 42.60099, "lon": -5.58427, "fetch": 229.65217, "terrain": 0.85357, "terrain_at": 4757.28707, "bldg": 2.92998, "bldg_h": 12.0, "bldg_d": 232.49151, "bldg_measured": false, "horizon": 2.92998, "clearance": 6.90346, "elev": 829.0, "prominence": -7.25, "area": 45222.72437, "stop_d": 220.04603, "rail_d": 681.89806, "kind": "park", "stop_name": "León", "stop_kind": "rail", "stop_lat": 42.5951, "stop_lon": -5.58194, "stop_d_used": 220}, {"name": "Monte San Isidro", "lat": 42.6265, "lon": -5.58956, "fetch": 386.10899, "terrain": 4.2873, "terrain_at": 138.70956, "bldg": 0.0, "bldg_h": null, "bldg_d": null, "bldg_measured": false, "horizon": 4.2873, "clearance": 5.54614, "elev": 918.0, "prominence": 38.75, "area": 1391120.68457, "stop_d": 468.84512, "rail_d": 2117.09115, "kind": "park", "stop_name": "Asunción-Universidad", "stop_kind": "rail", "stop_lat": 42.61595, "stop_lon": -5.56624, "stop_d_used": 469}]}};
+var SUNDIA = 0.53;
+
+function verdict(cl){
+  var d = cl / SUNDIA;
+  if (d >= 2)   return {k:"clear",   cls:"clear",   label:"Clear horizon"};
+  if (d >= 1)   return {k:"work",    cls:"clear",   label:"Workable"};
+  if (d > 0)    return {k:"tight",   cls:"tight",   label:"Tight — partly clipped"};
+  return {k:"blocked", cls:"blocked", label:"Blocked"};
+}
+function diaTxt(cl){
+  var d = cl / SUNDIA;
+  if (d <= 0) return "the sun sits " + Math.abs(d).toFixed(1) + " diameters below the skyline";
+  if (d >= 8) return "the horizon is simply not a constraint here";
+  return d.toFixed(1) + " sun-diameters of daylight beneath it";
+}
+var STOPK = {metro:"metro", tram:"tram stop", rail:"rail station",
+             bus:"bus stop", interchange:"transport interchange", stop:"stop"};
+function stopLabel(s){
+  var k = STOPK[s.stop_kind] || "stop";
+  var n = s.stop_name ? s.stop_name : "unnamed " + k;
+  var d = (s.stop_d_used != null) ? s.stop_d_used : Math.min(s.stop_d, s.rail_d);
+  return n + " · " + k + " · " + Math.round(d) + " m walk";
+}
+function plural(n, w){ return n + " " + w + (n === 1 ? "" : "s"); }
+function areaTxt(a){
+  return a >= 1e6 ? (a / 1e6).toFixed(1) + " km²" : Math.round(a / 10000) + " ha";
+}
+
+var DFILT = {clear:true, tot:false, rail:false, q:""};
+
+function drawDirectory(){
+  var host = document.getElementById("directory"), out = [], nCity = 0, nSpot = 0;
+  var keys = Object.keys(EUROPE).sort(function(a,b){
+    var A = EUROPE[a], B = EUROPE[b];
+    if (A.tot_vis !== B.tot_vis) return A.tot_vis ? -1 : 1;
+    return (B.obsc||0) - (A.obsc||0);
+  });
+  keys.forEach(function(k){
+    var c = EUROPE[k];
+    if (!c.visible || !c.spots || !c.spots.length) return;
+    if (DFILT.tot && !c.tot_vis) return;
+    var q = DFILT.q.toLowerCase();
+    var spots = c.spots.filter(function(s){
+      if (DFILT.clear && s.clearance <= 0) return false;
+      if (DFILT.rail && ["metro","tram","rail"].indexOf(s.stop_kind) < 0) return false;
+      if (q && (c.city + " " + c.cc + " " + s.name).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    if (!spots.length) return;
+    nCity++; nSpot += spots.length;
+    var what = c.tot_vis
+      ? '<span class="tot">TOTALITY ' + dur(c.tot_s) + '</span>'
+      : (c.obsc >= 99.5 ? c.obsc.toFixed(2) : c.obsc.toFixed(1)) + '% covered';
+    var easy = c.alt >= 10 ? '<span class="what" style="color:var(--grn)">'+
+      'sun high enough that obstructions barely matter — cloud is your only real risk</span>' : '';
+    out.push('<div class="citygrp"><div class="cityhead">'+
+      '<h3>'+c.city+'</h3><span class="cc">'+c.cc+'</span>'+
+      '<span class="what">'+what+' · sun '+c.alt.toFixed(1)+'° at '+Math.round(c.az)+'° '+
+      card8(c.az)+'</span>'+easy+'</div><div class="sgrid">'+
+      spots.map(function(s){ return spotCard(s, c); }).join("")+'</div></div>');
+  });
+  host.innerHTML = out.join("");
+  document.getElementById("dnone").style.display = nSpot ? "none" : "block";
+  document.getElementById("dcounts").textContent =
+    plural(nSpot, "spot") + " across " + plural(nCity, "city").replace("citys", "cities") +
+    (DFILT.clear ? " · only showing spots where the sun clears the measured horizon" : "");
+}
+
+function spotCard(s, c){
+  var v = verdict(s.clearance);
+  var az = Math.round(c.az), ll = s.lat.toFixed(5)+","+s.lon.toFixed(5);
+  var frac = Math.max(0, Math.min(1, s.clearance / Math.max(c.alt, 0.01)));
+  var col = v.k === "blocked" ? "#ff6b6b" : v.k === "tight" ? "#f5c451" : "#5fd6a0";
+  var blocker;
+  if (s.horizon < 0.02) blocker = "nothing measurable on this bearing";
+  else if (s.terrain >= s.bldg)
+    blocker = "terrain — "+s.terrain.toFixed(2)+"° rising "+(s.terrain_at/1000).toFixed(1)+" km out";
+  else
+    blocker = "buildings — "+s.bldg.toFixed(2)+"°"+
+      (s.bldg_h ? " ("+Math.round(s.bldg_h)+" m at "+Math.round(s.bldg_d)+" m)" : "");
+  return '<div class="scard '+v.cls+'">'+
+    '<span class="vb '+v.k+'">'+v.label+'</span>'+
+    '<h4>'+s.name+'</h4>'+
+    '<div class="kind">'+s.kind.replace(/_/g," ")+' · '+areaTxt(s.area)+'</div>'+
+    '<div class="bar"><i style="width:'+(frac*100).toFixed(0)+'%;background:'+col+'"></i></div>'+
+    '<dl class="ev">'+
+      '<dt>Clearance</dt><dd><b>'+(s.clearance>0?"+":"")+s.clearance.toFixed(2)+'°</b> — '+diaTxt(s.clearance)+'</dd>'+
+      '<dt>In the way</dt><dd>'+blocker+'</dd>'+
+      '<dt>Open ground</dt><dd><b>'+Math.round(s.fetch)+' m</b> toward '+az+'° (need '+c.need15+' m for a 15 m block)</dd>'+
+      '<dt>Transit</dt><dd>'+stopLabel(s)+'</dd>'+
+    '</dl>'+
+    '<div class="links">'+
+      '<a target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+ll+'&heading='+az+'&pitch=5&fov=80">Street View → '+az+'°</a>'+
+      '<a target="_blank" rel="noopener" href="https://earth.google.com/web/@'+s.lat.toFixed(5)+','+s.lon.toFixed(5)+',0a,2500d,35y,'+az+'h,85t,0r">Earth 3D</a>'+
+      '<a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+ll+'&travelmode=transit">Get there</a>'+
+    '</div>'+
+    (s.bldg_measured ? '' : '<div class="est">Building heights not tagged in OpenStreetMap here — a 12 m default was assumed. Check the Street View link.</div>')+
+  '</div>';
+}
+
+(function(){
+  function tog(id, key, warn){
+    var el = document.getElementById(id);
+    el.addEventListener("click", function(){
+      DFILT[key] = !DFILT[key];
+      el.classList.toggle("on", DFILT[key]);
+      if (warn) el.classList.toggle("warnc", DFILT[key]);
+      drawDirectory();
+    });
+  }
+  tog("f-clear","clear"); tog("f-tot","tot",true); tog("f-rail","rail",true);
+
+  // plot every vetted spot on the map, coloured by verdict
+  if (window._map && window.L) {
+    var layer = L.layerGroup();
+    Object.keys(EUROPE).forEach(function(k){
+      var c = EUROPE[k];
+      (c.spots || []).forEach(function(sp){
+        var v = verdict(sp.clearance);
+        var col = v.k === "blocked" ? "#ff6b6b" : v.k === "tight" ? "#f5c451" : "#5fd6a0";
+        L.circleMarker([sp.lat, sp.lon], {radius:3.2, color:col, weight:1,
+          fillColor:col, fillOpacity:.75})
+         .bindPopup("<strong>"+sp.name+"</strong><br>"+c.city+" — "+v.label+
+           "<br>clearance "+(sp.clearance>0?"+":"")+sp.clearance.toFixed(2)+"°"+
+           "<br><a target='_blank' rel='noopener' href='https://www.google.com/maps/@?api=1"+
+           "&map_action=pano&viewpoint="+sp.lat.toFixed(5)+","+sp.lon.toFixed(5)+
+           "&heading="+Math.round(c.az)+"&pitch=5&fov=80'>Street View → "+Math.round(c.az)+"°</a>")
+         .addTo(layer);
+      });
+    });
+    layer.addTo(window._map);
+    window._spotLayer = layer;
+    var ctl = document.createElement("span");
+    ctl.className = "chip on";
+    ctl.textContent = "Viewing spots on map";
+    ctl.style.marginLeft = "0";
+    ctl.addEventListener("click", function(){
+      var on = window._map.hasLayer(layer);
+      if (on) window._map.removeLayer(layer); else layer.addTo(window._map);
+      ctl.classList.toggle("on", !on);
+    });
+    var lg = document.querySelector("#map-sec .legend");
+    if (lg) { lg.parentNode.insertBefore(ctl, lg.nextSibling); }
+  }
+  var t;
+  document.getElementById("dsearch").addEventListener("input", function(){
+    var v = this.value;
+    clearTimeout(t); t = setTimeout(function(){ DFILT.q = v; drawDirectory(); }, 160);
+  });
+  drawDirectory();
+})();
+
+/* ---- spots ---- */
+var ssel=document.getElementById("spot-city");
+Object.keys(SPOTS).forEach(function(k){var o=document.createElement("option");
+ o.value=k;o.textContent=k;ssel.appendChild(o);});
+function drawSpots(city){
+ var list=SPOTS[city]||[],box=document.getElementById("spot-list");
+ box.innerHTML=list.map(function(s){
+  var a=analyse(s.lat,s.lon,s.tz,s.name);
+  var az=a.aMax?a.aMax.az.toFixed(0):270,alt=a.aMax?a.aMax.alt.toFixed(1):"—";
+  var ll=s.lat.toFixed(5)+","+s.lon.toFixed(5);
+  var badge=a.totVis?'<span style="color:var(--grn)">Totality '+dur(a.r.totSec)+'</span>':
+    (a.best?(a.best.o*100).toFixed(1)+'% covered':'—');
+  return '<div class="spot"><span class="tp">'+s.transport+'</span>'+
+   '<h4>'+s.name+'</h4>'+
+   '<div class="meta">'+badge+' · sun '+alt+'° at '+az+'° ('+card8(+az)+')'+(s.elev?' · '+s.elev:'')+'</div>'+
+   '<p>'+s.why+'</p><div class="links">'+
+   '<a target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+ll+'&heading='+az+'&pitch=5&fov=80">Street View → '+az+'°</a>'+
+   '<a target="_blank" rel="noopener" href="https://earth.google.com/web/@'+s.lat.toFixed(5)+','+s.lon.toFixed(5)+',0a,2500d,35y,'+az+'h,85t,0r">Earth 3D</a>'+
+   '<a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+ll+'&travelmode=transit">Transit</a>'+
+   '</div></div>';}).join("");
+}
+ssel.addEventListener("change",function(){drawSpots(this.value);});
+drawSpots(Object.keys(SPOTS)[0]);
+
+/* ---- escape table ---- */
+(function(){
+ var tb=document.querySelector("#escape-tbl tbody");
+ tb.innerHTML=ESCAPE.map(function(e){
+  var f=byName(e.from),fa=f?analyse(f.lat,f.lon,f.tz,f.n):null,to=analyse(e.lat,e.lon,e.tz,e.to);
+  var fv=fa&&fa.best?fa.best.o*100:null;
+  return "<tr><td><strong>"+e.from+"</strong></td>"+
+   "<td>"+(fv!=null?(fv>=99.5?fv.toFixed(2):fv.toFixed(1))+"% — no totality":"—")+"</td>"+
+   "<td><strong style='color:var(--grn)'>"+e.to+"</strong></td>"+
+   "<td>"+e.how+"</td>"+
+   "<td class='num' style='color:var(--grn)'>"+dur(to.r.totSec)+"</td></tr>";
+ }).join("");
+})();
+
+/* ---- timeline ---- */
+(function(){
+ var EV=[
+ {t:"19:27",h:"Eclipse begins — Milan / much of central Europe",p:"First contact. The moon takes its first visible bite out of the sun's western edge. Filters on from this second.",hot:true},
+ {t:"17:48",h:"Totality — Reykjavík, Iceland",p:"The path makes landfall in the Westfjords. Reykjavík gets 59 seconds with the sun a comfortable 25° up — the easiest totality on this eclipse.",hot:true},
+ {t:"20:27",h:"Totality — northern Spain",p:"Oviedo, Gijón, Santander, Bilbao, Burgos. Up to 1m48s with the sun 10° above the Atlantic. This is where the longest accessible totality is.",hot:true},
+ {t:"20:29",h:"Totality — Ebro valley",p:"Zaragoza, Huesca, Lleida, Tarragona. 84 seconds, sun at 6°. Statistically the clearest skies anywhere on the track.",hot:true},
+ {t:"20:31",h:"Totality — Balearics, on the water",p:"Palma sees 1m36s with the sun 2.6° above the Mediterranean — a totally eclipsed sun almost touching the sea. The rarest sight of the day, and the most weather-fragile.",hot:true},
+ {t:"20:20",h:"Maximum — Milan, 92% covered",p:"Sun 1.9° up, bearing 290° WNW. Bronze light, sharp crescent shadows under trees, and a visibly crescent sun sinking into the Po valley haze.",hot:true},
+ {t:"20:35",h:"Sunset, mid-eclipse",p:"Across Italy and eastern Spain the sun sets while still eclipsed. In Rome the sun is gone before maximum — only 75% is ever visible there.",hot:false},
+ {t:"21:20",h:"Civil twilight ends",p:"Pack the solar filters away for good. Nothing more to see until the sky darkens properly.",hot:false},
+ {t:"22:30",h:"Milky Way core, due south",p:"With no moon at all, the galactic core is at its best for the year — Sagittarius and Scorpius low in the south. Worth a wide lens and 20 seconds.",hot:false},
+ {t:"23:00",h:"Perseid radiant climbing",p:"Perseus is well up in the north-east. Rates rise steadily from here through the night.",hot:false},
+ {t:"01:00",h:"Venus at dichotomy",p:"Venus reaches exactly half-phase — a clean 50/50 terminator in even a small telescope. A quiet, precise little event most people skip.",hot:false},
+ {t:"03:00",h:"Perseids — best hour",p:"Radiant highest, sky darkest, no moon whatsoever. If you only stay up for one hour of the night, this is it. Lie flat, look up, no telescope, no phone.",hot:true}
+ ];
+ document.getElementById("timeline").innerHTML=EV.map(function(e){
+  return '<div class="ev'+(e.hot?"":" dim")+'"><time>'+e.t+'</time><h4>'+e.h+'</h4><p>'+e.p+'</p></div>';
+ }).join("")+'<p style="color:var(--dim2);font-size:13px;margin-top:-10px">Times are local to the '+
+ 'place named in each entry, on the evening of 12 August into the morning of 13 August 2026.</p>';
+})();
+
+/* ---- countdown ---- */
+(function(){
+ var target=Date.UTC(2026,7,12,18,20,44);
+ function tick(){
+  var d=target-Date.now();
+  if(d<0)d=0;
+  var s=Math.floor(d/1000);
+  document.getElementById("cd-d").textContent=Math.floor(s/86400);
+  document.getElementById("cd-h").textContent=Math.floor(s%86400/3600);
+  document.getElementById("cd-m").textContent=Math.floor(s%3600/60);
+  document.getElementById("cd-s").textContent=s%60;
+ }
+ tick();setInterval(tick,1000);
+})();
+
+/* ---- starfield ---- */
+(function(){
+ var c=document.getElementById("stars"),x=c.getContext("2d"),st=[];
+ function size(){c.width=c.offsetWidth*devicePixelRatio;c.height=c.offsetHeight*devicePixelRatio;
+  st=[];var n=Math.round(c.width*c.height/22000);
+  for(var i=0;i<n;i++)st.push({x:Math.random()*c.width,y:Math.random()*c.height,
+   r:Math.random()*1.3*devicePixelRatio+.3,a:Math.random(),s:Math.random()*.018+.004});}
+ function draw(){x.clearRect(0,0,c.width,c.height);
+  st.forEach(function(p){p.a+=p.s;var o=.28+.42*Math.sin(p.a);
+   x.globalAlpha=o<0?0:o;x.fillStyle="#dfe7ff";
+   x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();});
+  requestAnimationFrame(draw);}
+ size();draw();addEventListener("resize",size);
+})();
+</script>
+</body>
+</html>
