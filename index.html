@@ -471,6 +471,13 @@ footer a{color:var(--dim)}
       <div class="note" style="margin-top:14px" data-i18n="methNote"></div>
     </div>
   </div>
+  <div class="card" style="margin-top:16px;border-color:#2e6b4e">
+    <h3 style="font-size:18px;color:var(--grn)" data-i18n="reproH"></h3>
+    <p style="color:var(--dim);margin-top:12px" data-i18n="repro1"></p>
+    <p style="color:var(--dim);margin-top:12px" data-i18n="repro2"></p>
+    <p style="color:var(--dim);margin-top:12px" data-i18n="repro3"></p>
+    <p style="color:var(--dim2);margin-top:12px;font-size:14px" data-i18n="reproFoot"></p>
+  </div>
   <div class="card" style="margin-top:16px">
     <h3 style="font-size:18px" data-i18n="methFinalH"></h3>
     <p style="color:var(--dim);margin-top:10px" data-i18n="methFinalP"></p>
@@ -588,6 +595,11 @@ en: {
  animZoom:"magnified",
  animFoot:"Computed for the city centre. Sun and moon are drawn at their true angular size and true separation, on the same scale as the sky around them, so the sun really is that small against that much sky. The inset magnifies the pair so the crescent stays readable.",
  animHorizonNote:"True scale on both axes. The treeline sits on the horizon; your own skyline is in Where to go.",
+ reproH:"The method, in three steps",
+ repro1:"<strong>1. Where the sun will be.</strong> NASA/GSFC publishes Besselian elements for this specific eclipse. Evaluate those polynomials at your latitude and longitude for contact times, magnitude and obscuration, and use a standard solar-position routine for altitude and azimuth. Then quote the maximum coverage <em>visible above the horizon</em>, not the geometric maximum. That is why Rimini reads 89.8% here and 92.7% elsewhere.",
+ repro2:"<strong>2. What is in the way, on that exact bearing.</strong> Sample SRTM 30 m elevations along the sun's azimuth out to 45 km, correcting for Earth curvature and refraction, and take the highest elevation angle. Ignore anything closer than 2 km: SRTM is radar-derived and returns rooftops rather than ground in built-up areas. For the near field use OpenStreetMap building footprints in a 2.5 km corridor, with their tagged heights, seated on the interpolated terrain and viewed from eye level.",
+ repro3:"<strong>3. Subtract, then check yourself.</strong> Margin = sun altitude minus whichever obstruction is higher. The sun is 0.53° wide, so a margin over half that clears the whole disc; below zero it is behind the ridge. Validate against published local circumstances before trusting any of it. This engine was written twice, once in Python to prepare the data and once in JavaScript to run in your browser, and the two agree to the last printed digit.",
+ reproFoot:"Every input is free and public: NASA for the ephemeris, OpenTopoData for SRTM, Overpass for OpenStreetMap. The only real cost is patience with Overpass rate limits.",
  authorH:"Who made this, and what it is not",
  authorP:"Built by <strong>Yashaswy Akella</strong> for 12 August 2026.",
  disclaimerP:"This page is a calculation, not a promise. The eclipse geometry comes from NASA's published elements, the terrain from SRTM, the open spaces and transit stops from OpenStreetMap. Any of those can be wrong or out of date: a hill can be mismapped, a building can be untagged, a row of trees appears in no dataset at all. Check anything you are travelling for against a second source.",
@@ -762,6 +774,11 @@ it: {
  animZoom:"ingrandito",
  animFoot:"Calcolato per il centro città. Sole e luna sono disegnati alla loro vera dimensione angolare e alla loro vera distanza, nella stessa scala del cielo attorno: il sole è davvero così piccolo rispetto a tutto quel cielo. Il riquadro ingrandisce la coppia perché la falce resti leggibile.",
  animHorizonNote:"Scala reale su entrambi gli assi. Gli alberi stanno sull'orizzonte; il tuo profilo reale è in Dove andare.",
+ reproH:"Il metodo, in tre passaggi",
+ repro1:"<strong>1. Dove sarà il sole.</strong> La NASA/GSFC pubblica gli elementi besseliani di questa specifica eclissi. Valuta quei polinomi alla tua latitudine e longitudine per ottenere tempi di contatto, magnitudine e oscuramento, e usa una routine standard di posizione solare per altezza e azimut. Poi riporta la copertura massima <em>visibile sopra l'orizzonte</em>, non il massimo geometrico: per questo Rimini qui risulta 89,8% e altrove 92,7%.",
+ repro2:"<strong>2. Cosa c'è di mezzo, su quell'azimut esatto.</strong> Campiona le quote SRTM a 30 m lungo l'azimut del sole fino a 45 km, correggendo per curvatura terrestre e rifrazione, e prendi l'angolo di elevazione più alto. Ignora tutto ciò che è più vicino di 2 km: l'SRTM deriva da radar e nelle aree costruite restituisce i tetti, non il suolo. Per il campo vicino usa le sagome degli edifici di OpenStreetMap in un corridoio di 2,5 km, con le loro altezze mappate, poggiate sul terreno interpolato e viste all'altezza degli occhi.",
+ repro3:"<strong>3. Sottrai, poi verifica.</strong> Margine = altezza del sole meno l'ostacolo più alto tra i due. Il sole è largo 0,53°, quindi un margine superiore alla metà fa passare tutto il disco; sotto zero è dietro il crinale. Valida sulle circostanze locali pubblicate prima di fidarti di qualunque risultato. Questo motore è stato scritto due volte, in Python per preparare i dati e in JavaScript per girare nel tuo browser, e i due risultati coincidono fino all'ultima cifra stampata.",
+ reproFoot:"Tutti i dati di partenza sono gratuiti e pubblici: NASA per l'effemeride, OpenTopoData per l'SRTM, Overpass per OpenStreetMap. L'unico costo vero è la pazienza con i limiti di frequenza di Overpass.",
  authorH:"Chi l'ha fatto, e cosa non è",
  authorP:"Realizzato da <strong>Yashaswy Akella</strong> per il 12 agosto 2026.",
  disclaimerP:"Questa pagina è un calcolo, non una promessa. La geometria dell'eclissi viene dagli elementi pubblicati dalla NASA, il rilievo da SRTM, gli spazi aperti e le fermate da OpenStreetMap. Ognuno di questi può essere sbagliato o non aggiornato: una collina può essere mappata male, un edificio può non avere l'altezza, e una fila di alberi non compare in nessun dataset. Verifica con una seconda fonte tutto ciò per cui ti metti in viaggio.",
