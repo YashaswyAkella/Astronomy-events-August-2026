@@ -1,95 +1,30 @@
-# 12 August 2026 — the eclipse from northern Italy
+# Cosmos
 
-**→ [yashaswyakella.github.io/Astronomy-events-August-2026](https://yashaswyakella.github.io/Astronomy-events-August-2026/)**
+A hand-built 3D map of the cosmos that runs in the browser with no libraries, no build step and no server. Open `index.html` and it just runs.
 
-On the evening of 12 August 2026 the sun sets over northern Italy while deeply
-eclipsed, between 0.1° and 3.1° above the horizon. At that height the skyline in
-front of you matters more than the city you are standing in. This page measures
-both, for 45 cities.
+**Live:** https://YashaswyAkella.github.io/cosmos/
 
-In English and Italian.
+## What is in it
 
-## What it does
+- The solar system with real orbits (JPL J2000 elements), moons, dwarf planets, the famous asteroids and comets, and spacecraft from Voyager to Webb.
+- 109,000 stars, 105,000 galaxies with distances, 66,000 asteroids and comets, 16,500 satellites, 6,200 exoplanets and 3,600 nebulae and clusters, all searchable.
+- Telescope views: select Hubble, Webb, Chandra or Kepler to see the patches of sky they stared at, and zoom in to their real size.
+- A trip planner: pick any two places and see the distance and how long the journey takes at the speed of Apollo 11, Voyager, light and more, plus the next real launch window.
+- A size comparison: put any two things side by side to scale, from the Moon to the Milky Way.
+- Real phases and rotation: every world shows its true day and night side for the simulated time, the Moon keeps its real phase, and Settings → Realistic surfaces adds Earth's continents, Jupiter's belts and the Great Red Spot, Saturn's ring divisions and shadows, the Moon's maria and Mars's dark regions, all drawn from real geography.
+- The Milky Way itself: search for it and fly out to see the whole barred spiral from outside, with the Sun marked in the Local Arm, then keep zooming to see Andromeda beside it.
+- A cosmic address for everything: every object's panel shows where it sits, from the Orion Spur through the Milky Way, the Local Group, the Virgo Supercluster and Laniakea to the edge of the observable universe, and each step is a place you can fly to.
+- The deep universe: famous quasars like 3C 273 and TON 618, the Einstein Cross, the Bullet Cluster, gravitational-wave and gamma-ray-burst sources, the first galaxies, and the great walls and voids of the cosmic web, each placed by its redshift and coloured by how long its light has travelled.
+- 88 constellations by name, Sagittarius A*, pulsars, magnetars and black holes.
 
-**Computes the eclipse rather than tabulating it.** Contact times, magnitude and
-obscuration come from NASA/GSFC's published Besselian elements for this eclipse,
-evaluated per coordinate in the browser. Sun altitude, azimuth and sunset are
-computed separately.
+## Feedback wanted
 
-**Reports what is actually visible.** The figure quoted is the maximum coverage
-above the horizon, not the geometric maximum. In Rimini the sun sets before the
-peak, so 92.7% on paper is 89.8% in practice.
+This is a beta. It works best on a laptop or desktop; the phone layout is not finished yet.
 
-**Measures the horizon.** Terrain from the SRTM 30 m elevation model along the
-sun's exact bearing out to 45 km, corrected for Earth curvature and refraction,
-plus buildings from OpenStreetMap in a 2.5 km corridor using tagged heights where
-they exist. This is what separates Milan (+1.70°, nothing in the way for forty
-kilometres) from Aosta (−11.44°, behind a wall of Alps) despite Aosta having the
-higher sun.
+## Controls
 
-**Finds somewhere to stand.** 96 open, publicly accessible spaces near a station
-or stop were checked across 20 cities; 27 have a confirmed clear horizon. Every
-one carries a Street View link pre-aimed at the bearing of the eclipsed sun, so
-the horizon can be looked at rather than assumed.
+Drag to orbit, scroll to zoom, click to select, double-click to fly. Search at the top. The time bar at the bottom runs the clock. The horizon stays level by default; switch on Free rotation in Settings to turn in any direction, including over the poles.
 
-**Animates it.** The eclipsed sun for any of 45 cities, drawn at true angular size
-and true separation on the same scale as the sky around it, from first contact to
-sunset.
+## Data credits
 
-## Accuracy
-
-Validated against published local circumstances:
-
-| Check | This page | Published |
-|---|---|---|
-| Milan magnitude | 0.933 | 0.933 |
-| Milan obscuration | 92.3% | 92.3% |
-| Milan first contact | 19:27:43 | 19:27:37 |
-| Milan maximum | 20:20:43 | 20:20:39 |
-| Turin obscuration | 93.3% | 93.3% |
-
-Contact times land within about ten seconds of published values. The browser
-engine and the Python engine used to prepare the data were written separately and
-agree to the last printed digit on obscuration, altitude and azimuth.
-
-## What it does not know
-
-- **Small steep hills.** SRTM at 30 m smooths them. It reads Milan's Monte Stella
-  as roughly 15 m of relief, so that locally famous viewpoint does not rank. A low
-  ranking means "not proven", not "ruled out".
-- **Untagged buildings.** Where OpenStreetMap has no height, 12 m is assumed and
-  the card says so. Every clear verdict is re-tested against 20, 30 and 40 m.
-- **Trees, walls, scaffolding, parked lorries.** In no dataset. At 2° a hedge is a
-  mountain.
-- **The weather**, which is the likeliest single thing to ruin this.
-- **Altitude.** Sea level is assumed throughout, so the foothills are better than
-  they look here.
-
-## Safety
-
-Every phase of this eclipse is dangerous to look at. Nowhere in Italy reaches
-totality, so there is no moment at which the filter comes off.
-
-Use ISO 12312-2 eclipse glasses for your eyes, and a full-aperture certified
-filter over the **front** of any telescope, lens or binocular. Never a screw-in
-eyepiece filter; they crack under concentrated heat, while you are looking
-through them. With no filter, use pinhole projection onto white card.
-
-## Author and disclaimer
-
-Built by **Yashaswy Akella**.
-
-This is a calculation, not a promise. The underlying data can be wrong or out of
-date. Check anything you are travelling for against a second source. Use at your
-own risk: I accept no responsibility for a wasted journey, a missed eclipse,
-damaged equipment, or injury of any kind. Looking at the sun is dangerous and it
-is your responsibility.
-
-## Sources
-
-- [NASA/GSFC — Besselian elements, 2026 Aug 12](https://eclipse.gsfc.nasa.gov/SEbeselm/SEbeselm2001/SE2026Aug12Tbeselm.html)
-- [Xavier Jubier — interactive eclipse map](http://xjubier.free.fr/en/site_pages/solar_eclipses/TSE_2026_GoogleMapFull.html)
-- [SRTM 30 m via OpenTopoData](https://www.opentopodata.org/datasets/srtm/) — terrain
-- [OpenStreetMap contributors](https://www.openstreetmap.org/copyright) — open space, transit and buildings (ODbL)
-- [Eclipsophile](https://eclipsophile.com/tse2026/) — eclipse weather climatology
-- [Royal Observatory Greenwich](https://www.rmg.co.uk/stories/space-astronomy/how-see-12-august-2026-partial-solar-eclipse) — viewing and safety
+HYG v4.0 (CC BY-SA 2.5), OpenNGC (CC BY-SA 4.0), HyperLEDA, NASA Exoplanet Archive, JPL Small-Body Database, Celestrak, Strasbourg-ESO planetary nebulae, Green's supernova remnants, Sharpless H II regions, JPL J2000 planetary elements. 
